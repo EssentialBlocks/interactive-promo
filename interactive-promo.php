@@ -6,9 +6,9 @@
  * Author:          The WordPress Contributors
  * License:         GPL-2.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     create-block
+ * Text Domain:     interactive-promo 
  *
- * @package         create-block
+ * @package         block
  */
 
 /**
@@ -17,6 +17,14 @@
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
+
+if( ! class_exists('EB_Font_Loader') ) {
+	require_once __DIR__ . '/includes/font-loader.php';
+}
+if( ! class_exists('EB_Post_Meta') ) {
+	require_once __DIR__ . '/includes/post-meta.php';
+}
+
 function create_block_interactive_promo_block_init() {
 	$dir = dirname( __FILE__ );
 
@@ -35,14 +43,6 @@ function create_block_interactive_promo_block_init() {
 		$script_asset['version']
 	);
 
-	$editor_css = 'build/index.css';
-	wp_register_style(
-		'create-block-interactive-promo-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(),
-		filemtime( "$dir/$editor_css" )
-	);
-
 	$style_css = 'build/style-index.css';
 	wp_register_style(
 		'create-block-interactive-promo-block',
@@ -51,10 +51,18 @@ function create_block_interactive_promo_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
-	register_block_type( 'create-block/interactive-promo', array(
-		'editor_script' => 'create-block-interactive-promo-block-editor',
-		'editor_style'  => 'create-block-interactive-promo-block-editor',
-		'style'         => 'create-block-interactive-promo-block',
-	) );
+  wp_enqueue_style(
+    'hover-effects-style',
+    plugins_url('src/css/hover-effects.css', __FILE__),
+    array()
+  );
+
+	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/interactive-promo' ) ) {
+    register_block_type( 'block/interactive-promo', array(
+      'editor_script' => 'create-block-interactive-promo-block-editor',
+      'editor_style'  => 'create-block-interactive-promo-block-editor',
+      'style'         => 'create-block-interactive-promo-block',
+    ) );
+  }
 }
 add_action( 'init', 'create_block_interactive_promo_block_init' );

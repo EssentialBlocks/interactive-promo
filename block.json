@@ -1,14 +1,9 @@
 {
-	"name": "create-block/interactive-promo",
+	"name": "block/interactive-promo",
 	"title": "Interactive Promo",
 	"category": "widgets",
-	"icon": "smiley",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
-	"textdomain": "create-block",
-	"supports": {
-		"html": false
-	},
+	"description": "",
+	"textdomain": "interactive-promo",
 	"editorScript": "file:./build/index.js",
-	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css"
 }

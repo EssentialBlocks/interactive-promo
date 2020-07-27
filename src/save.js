@@ -9,7 +9,6 @@ const Save = ({ attributes }) => {
 		imageAltTag,
 		headerColor,
 		contentColor,
-		contentFontSize,
 		newWindow,
 		borderTop,
 		borderRight,
@@ -24,16 +23,61 @@ const Save = ({ attributes }) => {
 		shadowBlur,
 		shadowSpread,
 		link,
-		radiusUnit
+		radiusUnit,
+		headerFontFamily,
+		headerFontSize,
+		headerFontSizeUnit,
+		headerFontWeight,
+		headerTextTransform,
+		headerTextDecoration,
+		headerLetterSpacing,
+		headerLetterSpacingUnit,
+		headerLineHeight,
+		headerLineHeightUnit,
+		contentFontFamily,
+		contentFontSize,
+		contentFontSizeUnit,
+		contentFontWeight,
+		contentTextTransform,
+		contentTextDecoration,
+		contentLetterSpacing,
+		contentLetterSpacingUnit,
+		contentLineHeight,
+		contentLineHeightUnit,
 	} = attributes;
 
 	const headerStyles = {
-		color: headerColor || "#ffffff"
+		color: headerColor || "#ffffff",
+		fontFamily: headerFontFamily,
+		fontSize: headerFontSize
+			? `${headerFontSize}${headerFontSizeUnit}`
+			: undefined,
+		fontWeight: headerFontWeight,
+		textTransform: headerTextTransform,
+		textDecoration: headerTextDecoration,
+		letterSpacing: headerLetterSpacing
+			? `${headerLetterSpacing}${headerLetterSpacingUnit}`
+			: undefined,
+		lineHeight: headerLineHeight
+			? `${headerLineHeight}${headerLineHeightUnit}`
+			: undefined,
 	};
 
 	const contentStyles = {
 		color: contentColor || "#ffffff",
-		fontSize: `${contentFontSize || 14}px`
+		fontFamily: contentFontFamily,
+		fontSize: contentFontSize
+			? `${contentFontSize}${contentFontSizeUnit}`
+			: undefined,
+		fontWeight: contentFontWeight,
+		textTransform: contentTextTransform,
+		textDecoration: contentTextDecoration,
+		letterSpacing: contentLetterSpacing
+			? `${contentLetterSpacing}${contentLetterSpacingUnit}`
+			: undefined,
+		lineHeight: contentLineHeight
+			? `${contentLineHeight}${contentLineHeightUnit}`
+			: undefined,
 	};
 
 	const figureStyles = {
@@ -45,12 +89,13 @@ const Save = ({ attributes }) => {
 		borderStyle: borderStyle,
 		borderColor: borderColor,
 		borderRadius: `${borderRadius || 0}${radiusUnit}`,
-		boxShadow: `${hOffset || 0}px ${vOffset || 0}px ${shadowBlur ||
-			0}px ${shadowSpread || 0}px ${shadowColor || "#000000"}`
+		boxShadow: `${hOffset || 0}px ${vOffset || 0}px ${shadowBlur || 0}px ${
+			shadowSpread || 0
+		}px ${shadowColor || "#000000"}`,
 	};
 
 	const imageStyles = {
-		minWidth: "100%"
+		minWidth: "100%",
 	};
 
 	return (

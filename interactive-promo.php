@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name:     Interactive Promo
- * Description:     Example block written with ESNext standard and JSX support – build step required.
+ * Description:     Engage your potential audience with exciting promo
  * Version:         0.1.0
  * Author:          The WordPress Contributors
  * License:         GPL-2.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:     interactive-promo 
  *
- * @package         block
+ * @package         interactive-promo
  */
 
 /**

@@ -8,8 +8,11 @@ import icon from "./icon";
 import attributes from "./attributes";
 
 registerBlockType("block/interactive-promo", {
-	title: __("Interactive Promo", "block"),
-	description: __("", "block"),
+	title: __("Interactive Promo", "interactive-promo"),
+	description: __(
+		"Engage your potential audience with exciting promo",
+		"interactive-promo"
+	),
 	category: "widgets",
 	icon,
 	attributes,

@@ -2,8 +2,12 @@
 	"name": "block/interactive-promo",
 	"title": "Interactive Promo",
 	"category": "widgets",
+<<<<<<< HEAD
 	"description": "Engage your potential audience with exciting promo",
 	"keywords": ["promo", "interactive", "essential"],
+=======
+	"description": "Engage your potential audience with an exciting promo",
+>>>>>>> 0d4d196a655121880401cc33353266a9ac1727c3
 	"textdomain": "interactive-promo",
 	"editorScript": "file:./build/index.js",
 	"style": "file:./build/style-index.css"

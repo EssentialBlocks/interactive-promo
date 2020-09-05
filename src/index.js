@@ -13,6 +13,7 @@ registerBlockType("block/interactive-promo", {
 		"Engage your potential audience with exciting promo",
 		"interactive-promo"
 	),
+	keywords: [__("promo", __("interactive"), __("essential"))],
 	category: "widgets",
 	icon,
 	attributes,

@@ -1,19 +1,9 @@
 <?php
 /**
  * Plugin Name:     Interactive Promo
-<<<<<<< HEAD
- * Description:     Engage your potential audience with exciting promo
- * Version:         0.1.0
- * Author:          The WordPress Contributors
- * License:         GPL-2.0-or-later
- * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     interactive-promo 
- *
- * @package         interactive-promo
-=======
  * Plugin URI:      https://essential-blocks.com
  * Description:     Engage your potential audience with an exciting promo.
- * Version:         1.0.0
+ * Version:         1.0.1
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -21,7 +11,6 @@
  * Text Domain:     interactive-promo 
  *
  * @package         interactive-promo 
->>>>>>> 0d4d196a655121880401cc33353266a9ac1727c3
  */
 
 /**

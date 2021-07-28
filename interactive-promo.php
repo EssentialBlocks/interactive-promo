@@ -22,6 +22,7 @@
 
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
+require_once __DIR__ . '/lib/style-handler/style-handler';
 
 function create_block_interactive_promo_block_init() {
 	$dir = dirname( __FILE__ );

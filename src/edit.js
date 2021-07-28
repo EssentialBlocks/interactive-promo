@@ -2,8 +2,12 @@
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-const { useBlockProps, BlockControls, MediaPlaceholder, MediaUpload } =
-	wp.blockEditor;
+const {
+	useBlockProps,
+	BlockControls,
+	MediaPlaceholder,
+	MediaUpload,
+} = wp.blockEditor;
 const { Toolbar, Button } = wp.components;
 const { useEffect } = wp.element;
 const { select } = wp.data;
@@ -11,7 +15,9 @@ const { select } = wp.data;
 /**
  * Internal dependencies
  */
+
 import "./editor.scss";
+
 import Inspector from "./inspector";
 import {
 	softMinifyCssStrings,

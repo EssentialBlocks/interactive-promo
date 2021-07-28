@@ -21,7 +21,7 @@ const { select } = wp.data;
 /**
  * Internal dependencies
  */
-import ImageAvatar from "../util/image-avatar";
+import ImageAvatar from "../util/image-avatar/";
 import {
 	BORDER_STYLES,
 	EFFECTS_LIST,

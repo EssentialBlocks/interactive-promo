@@ -22,7 +22,7 @@ import {
 /**
  * Internal dependencies
  */
-import ImageAvater from "../util/image-avatar/ImageAvater";
+import ImageAvatar from "../util/image-avatar/";
 import {
 	BORDER_STYLES,
 	EFFECTS_LIST,
@@ -152,7 +152,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 					/>
 
 					{imageURL && (
-						<ImageAvater
+						<ImageAvatar
 							imageUrl={imageURL}
 							onDeleteImage={() => setAttributes({ imageURL: null })}
 						/>

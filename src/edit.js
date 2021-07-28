@@ -9,6 +9,9 @@ const { Component } = wp.element;
 /**
  * Internal dependencies
  */
+
+import "./editor.scss";
+
 import Inspector from "./inspector";
 
 export default class Edit extends Component {

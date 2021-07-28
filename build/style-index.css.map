@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///style.scss"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,8BAA8B,EAAE","file":"style-index.css","sourcesContent":[".eb-typography-base div {\n  display: flex;\n  justify-content: space-between; }\n"],"sourceRoot":""}

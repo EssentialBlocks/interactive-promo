@@ -22,7 +22,7 @@
 
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
-require_once __DIR__ . '/lib/style-handler/style-handler';
+require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_interactive_promo_block_init() {
 	$dir = dirname( __FILE__ );
@@ -34,12 +34,16 @@ function create_block_interactive_promo_block_init() {
 		);
 	}
 	$index_js     = 'build/index.js';
-	$script_asset = require( $script_asset_path );
 	wp_register_script(
 		'create-block-interactive-promo-block-editor',
 		plugins_url( $index_js, __FILE__ ),
-		$script_asset['dependencies'],
-		$script_asset['version']
+		array(
+			'wp-blocks',
+			'wp-i18n',
+			'wp-element',
+			'wp-block-editor',
+		),
+		filemtime("$dir/$index_js")
 	);
 
 	$style_css = 'build/style-index.css';
@@ -57,7 +61,7 @@ function create_block_interactive_promo_block_init() {
   );
 
 	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/interactive-promo' ) ) {
-    register_block_type( 'block/interactive-promo', array(
+    register_block_type( 'interactive-promo/interactive-promo', array(
       'editor_script' => 'create-block-interactive-promo-block-editor',
       'editor_style'  => 'create-block-interactive-promo-block-editor',
       'style'         => 'create-block-interactive-promo-block',

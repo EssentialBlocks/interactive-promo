@@ -1,3 +1,18 @@
+import {
+	wrapperWidth,
+	wrapperMargin,
+	wrapperPadding,
+	wrapperBorderShadow,
+} from "./constants";
+import * as typoPrefixs from "./constants/typographyPrefixConstants";
+
+import {
+	generateResponsiveRangeAttributes,
+	generateTypographyAttributes,
+	generateBorderShadowAttributes,
+	generateDimensionsAttributes,
+} from "../util/helpers";
+
 const attributes = {
 	// the following 4 attributes is must required for responsive options and asset generation for frontend
 	// responsive control attributes ⬇
@@ -45,12 +60,6 @@ const attributes = {
 	imageID: {
 		type: "string",
 		default: null,
-	},
-	imageHeight: {
-		type: "number",
-	},
-	imageWidth: {
-		type: "number",
 	},
 	imageAltTag: {
 		type: "string",
@@ -120,74 +129,27 @@ const attributes = {
 		type: "string",
 		default: "px",
 	},
-	headerFontFamily: {
-		type: "string",
+
+	isWrapperMaxWidth: {
+		type: "boolean",
+		default: true,
 	},
-	headerFontSize: {
-		type: "number",
-	},
-	headerFontSizeUnit: {
-		type: "string",
-		default: "px",
-	},
-	headerFontWeight: {
-		type: "string",
-		default: "normal",
-	},
-	headerLetterSpacing: {
-		type: "number",
-	},
-	headerLetterSpacingUnit: {
-		type: "string",
-		default: "px",
-	},
-	headerLineHeight: {
-		type: "number",
-	},
-	headerLineHeightUnit: {
-		type: "string",
-		default: "px",
-	},
-	headerTextTransform: {
-		type: "string",
-	},
-	headerTextDecoration: {
-		type: "string",
-	},
-	contentFontFamily: {
-		type: "string",
-	},
-	contentFontSize: {
-		type: "number",
-	},
-	contentFontSizeUnit: {
-		type: "string",
-		default: "px",
-	},
-	contentFontWeight: {
-		type: "string",
-		default: "normal",
-	},
-	contentLetterSpacing: {
-		type: "number",
-	},
-	contentLetterSpacingUnit: {
-		type: "string",
-		default: "px",
-	},
-	contentLineHeight: {
-		type: "number",
-	},
-	contentLineHeightUnit: {
-		type: "string",
-		default: "px",
-	},
-	contentTextTransform: {
-		type: "string",
-	},
-	contentTextDecoration: {
-		type: "string",
-	},
+	// typography attributes
+	...generateTypographyAttributes(Object.values(typoPrefixs)),
+	...generateResponsiveRangeAttributes(wrapperWidth, {
+		defaultRange: 480,
+	}),
+	// dimension attributes
+	...generateDimensionsAttributes(wrapperMargin, {
+		top: 0,
+		right: 0,
+		bottom: 25,
+		left: 0,
+		isLinked: false,
+	}),
+	...generateDimensionsAttributes(wrapperPadding),
+	// border & shadow attributes
+	...generateBorderShadowAttributes(wrapperBorderShadow),
 };
 
 export default attributes;

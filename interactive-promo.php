@@ -46,6 +46,14 @@ function create_block_interactive_promo_block_init() {
 		filemtime("$dir/$index_js")
 	);
 
+	$editor_css = 'build/index.css';
+	wp_register_style(
+		'create-block-interactive-promo-block-editor',
+		plugins_url( $editor_css, __FILE__ ),
+		array(),
+		filemtime( "$dir/$editor_css" )
+	);
+
 	$style_css = 'build/style-index.css';
 	wp_register_style(
 		'create-block-interactive-promo-block',

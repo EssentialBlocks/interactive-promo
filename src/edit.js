@@ -15,9 +15,7 @@ const { select } = wp.data;
 /**
  * Internal dependencies
  */
-
 import "./editor.scss";
-
 import Inspector from "./inspector";
 import {
 	softMinifyCssStrings,

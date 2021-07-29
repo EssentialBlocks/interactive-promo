@@ -65,3 +65,18 @@ export const TEXT_DECORATION = [
 	{ label: __("Underline"), value: "underline" },
 	{ label: __("Underline Oveline"), value: "underline overline" },
 ];
+
+export const WRAPPER_UNITS = [
+	{ label: "px", value: "px" },
+	{ label: "%", value: "%" },
+];
+
+// Responsive Range Controller
+export const wrapperWidth = "wrpWidth";
+
+// responsive dimension controller
+export const wrapperMargin = "wrpMargin";
+export const wrapperPadding = "wrpPadding";
+
+// border & shadow
+export const wrapperBorderShadow = "wrpBrdShdw";

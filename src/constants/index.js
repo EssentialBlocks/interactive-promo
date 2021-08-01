@@ -1,4 +1,5 @@
 const { __ } = wp.i18n;
+const { Dashicon } = wp.components;
 
 export const EFFECTS_LIST = [
 	{ label: __("Apollo"), value: "apollo" },
@@ -71,6 +72,12 @@ export const WRAPPER_UNITS = [
 	{ label: "%", value: "%" },
 ];
 
+export const ALIGNMENT = [
+	{ label: __(<Dashicon icon={"editor-alignleft"} />), value: "left" },
+	{ label: __(<Dashicon icon={"editor-aligncenter"} />), value: "center" },
+	{ label: __(<Dashicon icon={"editor-alignright"} />), value: "right" },
+];
+
 // Responsive Range Controller
 export const wrapperWidth = "wrpWidth";
 
@@ -80,3 +87,4 @@ export const wrapperPadding = "wrpPadding";
 
 // border & shadow
 export const wrapperBorderShadow = "wrpBrdShdw";
+export const imageBorderShadow = "imgBrdShdw";

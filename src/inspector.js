@@ -6,6 +6,7 @@ const { InspectorControls, MediaUpload } = wp.blockEditor;
 const {
 	PanelBody,
 	Button,
+	ButtonGroup,
 	BaseControl,
 	TextControl,
 	TextareaControl,
@@ -20,12 +21,14 @@ const { select } = wp.data;
  * Internal dependencies
  */
 import {
+	ALIGNMENT,
 	EFFECTS_LIST,
 	WRAPPER_UNITS,
 	wrapperWidth,
 	wrapperMargin,
 	wrapperPadding,
 	wrapperBorderShadow,
+	imageBorderShadow,
 } from "./constants";
 import {
 	typoPrefix_header,
@@ -56,6 +59,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 		headerColor,
 		contentColor,
 		isWrapperMaxWidth,
+		imageAlignment,
 	} = attributes;
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
 	useEffect(() => {
@@ -258,6 +262,42 @@ const Inspector = ({ attributes, setAttributes }) => {
 												}
 											/>
 										</>
+									</PanelBody>
+									<PanelBody
+										title={__("Image", "interactive-promo")}
+										initialOpen={false}
+									>
+										<BaseControl>
+											<h3 className="eb-control-title">
+												{__("Alignment", "interactive-promo")}
+											</h3>
+											<ButtonGroup>
+												{ALIGNMENT.map((item) => (
+													<Button
+														isLarge
+														isPrimary={imageAlignment === item.value}
+														isSecondary={imageAlignment !== item.value}
+														onClick={() =>
+															setAttributes({
+																imageAlignment: item.value,
+															})
+														}
+													>
+														{item.label}
+													</Button>
+												))}
+											</ButtonGroup>
+										</BaseControl>
+										<BaseControl>
+											<h3 className="eb-control-title">
+												{__("Border", "interactive-promo")}
+											</h3>
+										</BaseControl>
+										<BorderShadowControl
+											controlName={imageBorderShadow}
+											resRequiredProps={resRequiredProps}
+											noShadow
+										/>
 									</PanelBody>
 								</>
 							)}

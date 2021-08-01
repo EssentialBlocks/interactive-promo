@@ -3,6 +3,7 @@ import {
 	wrapperMargin,
 	wrapperPadding,
 	wrapperBorderShadow,
+	imageBorderShadow,
 } from "./constants";
 import * as typoPrefixs from "./constants/typographyPrefixConstants";
 
@@ -74,65 +75,22 @@ const attributes = {
 	},
 	headerColor: {
 		type: "string",
+		default: "#ffffff",
 	},
 	contentColor: {
 		type: "string",
-	},
-	linkedBorderWidth: {
-		type: "boolean",
-		default: true,
-	},
-	borderTop: {
-		type: "number",
-		default: 0,
-	},
-	borderRight: {
-		type: "number",
-	},
-	borderBottom: {
-		type: "number",
-		default: 0,
-	},
-	borderLeft: {
-		type: "number",
-		default: 0,
-	},
-	borderStyle: {
-		default: "none",
-	},
-	borderColor: {
-		type: "string",
-	},
-	borderRadius: {
-		type: "number",
-		default: 0,
-	},
-	shadowColor: {
-		type: "string",
-	},
-	hOffset: {
-		type: "number",
-	},
-	vOffset: {
-		type: "number",
-	},
-	shadowBlur: {
-		type: "number",
-	},
-	shadowSpread: {
-		type: "number",
+		default: "#ffffff",
 	},
 	link: {
 		type: "string",
 	},
-	radiusUnit: {
-		type: "string",
-		default: "px",
-	},
-
 	isWrapperMaxWidth: {
 		type: "boolean",
 		default: true,
+	},
+	imageAlignment: {
+		type: "string",
+		default: "center",
 	},
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
@@ -141,15 +99,16 @@ const attributes = {
 	}),
 	// dimension attributes
 	...generateDimensionsAttributes(wrapperMargin, {
-		top: 0,
+		top: 28,
 		right: 0,
-		bottom: 25,
+		bottom: 28,
 		left: 0,
 		isLinked: false,
 	}),
 	...generateDimensionsAttributes(wrapperPadding),
 	// border & shadow attributes
 	...generateBorderShadowAttributes(wrapperBorderShadow),
+	...generateBorderShadowAttributes(imageBorderShadow, { noShadow: true }),
 };
 
 export default attributes;

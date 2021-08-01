@@ -18,12 +18,22 @@ const { select } = wp.data;
 import "./editor.scss";
 import Inspector from "./inspector";
 import {
+	wrapperWidth,
+	wrapperMargin,
+	wrapperPadding,
+	wrapperBorderShadow,
+	imageBorderShadow,
+} from "./constants";
+import {
+	typoPrefix_header,
+	typoPrefix_content,
+} from "./constants/typographyPrefixConstants";
+import {
 	softMinifyCssStrings,
 	isCssExists,
 	mimmikCssForPreviewBtnClick,
 	duplicateBlockIdFix,
 	generateDimensionsControlStyles,
-	generateBackgroundControlStyles,
 	generateBorderShadowStyles,
 	generateTypographyStyles,
 	generateResponsiveRangeStyles,
@@ -34,103 +44,20 @@ const Edit = (props) => {
 	const {
 		blockMeta,
 		blockId,
+		resOption,
 		header,
 		content,
 		effectName,
 		imageURL,
 		imageID,
-		imageHeight,
-		imageWidth,
 		imageAltTag,
 		headerColor,
 		contentColor,
 		newWindow,
-		borderTop,
-		borderRight,
-		borderBottom,
-		borderLeft,
-		borderStyle,
-		borderColor,
-		borderRadius,
-		shadowColor,
-		hOffset,
-		vOffset,
-		shadowBlur,
-		shadowSpread,
 		link,
-		radiusUnit,
-		headerFontFamily,
-		headerFontSize,
-		headerFontSizeUnit,
-		headerFontWeight,
-		headerTextTransform,
-		headerTextDecoration,
-		headerLetterSpacing,
-		headerLetterSpacingUnit,
-		headerLineHeight,
-		headerLineHeightUnit,
-		contentFontFamily,
-		contentFontSize,
-		contentFontSizeUnit,
-		contentFontWeight,
-		contentTextTransform,
-		contentTextDecoration,
-		contentLetterSpacing,
-		contentLetterSpacingUnit,
-		contentLineHeight,
-		contentLineHeightUnit,
+		isWrapperMaxWidth,
+		imageAlignment,
 	} = attributes;
-	const headerStyles = {
-		color: headerColor || "#ffffff",
-		fontFamily: headerFontFamily,
-		fontSize: headerFontSize
-			? `${headerFontSize}${headerFontSizeUnit}`
-			: undefined,
-		fontWeight: headerFontWeight,
-		textTransform: headerTextTransform,
-		textDecoration: headerTextDecoration,
-		letterSpacing: headerLetterSpacing
-			? `${headerLetterSpacing}${headerLetterSpacingUnit}`
-			: undefined,
-		lineHeight: headerLineHeight
-			? `${headerLineHeight}${headerLineHeightUnit}`
-			: undefined,
-	};
-
-	const contentStyles = {
-		color: contentColor || "#ffffff",
-		fontFamily: contentFontFamily,
-		fontSize: contentFontSize
-			? `${contentFontSize}${contentFontSizeUnit}`
-			: undefined,
-		fontWeight: contentFontWeight,
-		textTransform: contentTextTransform,
-		textDecoration: contentTextDecoration,
-		letterSpacing: contentLetterSpacing
-			? `${contentLetterSpacing}${contentLetterSpacingUnit}`
-			: undefined,
-		lineHeight: contentLineHeight
-			? `${contentLineHeight}${contentLineHeightUnit}`
-			: undefined,
-	};
-
-	const figureStyles = {
-		height: imageHeight ? `${imageHeight}px` : "100%",
-		width: imageWidth ? `${imageWidth}px` : "100%",
-		position: "relative",
-		overflow: "hidden",
-		borderWidth: `${borderTop}px ${borderRight}px ${borderBottom}px ${borderLeft}px`,
-		borderStyle: borderStyle,
-		borderColor: borderColor,
-		borderRadius: `${borderRadius || 0}${radiusUnit}`,
-		boxShadow: `${hOffset || 0}px ${vOffset || 0}px ${shadowBlur || 0}px ${
-			shadowSpread || 0
-		}px ${shadowColor || "#000000"}`,
-	};
-
-	const imageStyles = {
-		minWidth: "100%",
-	};
 
 	if (!imageURL) {
 		return (
@@ -151,9 +78,217 @@ const Edit = (props) => {
 		);
 	}
 
-	const desktopStyles = ``;
-	const tabStyles = ``;
-	const mobileStyles = ``;
+	// wrapper styles css in strings
+	const {
+		dimensionStylesDesktop: wrapperMarginStylesDesktop,
+		dimensionStylesTab: wrapperMarginStylesTab,
+		dimensionStylesMobile: wrapperMarginStylesMobile,
+	} = generateDimensionsControlStyles({
+		controlName: wrapperMargin,
+		styleFor: "margin",
+		attributes,
+	});
+
+	const {
+		dimensionStylesDesktop: wrapperPaddingStylesDesktop,
+		dimensionStylesTab: wrapperPaddingStylesTab,
+		dimensionStylesMobile: wrapperPaddingStylesMobile,
+	} = generateDimensionsControlStyles({
+		controlName: wrapperPadding,
+		styleFor: "padding",
+		attributes,
+	});
+
+	const {
+		styesDesktop: wrapperBdShadowStyesDesktop,
+		styesTab: wrapperBdShadowStyesTab,
+		styesMobile: wrapperBdShadowStyesMobile,
+		stylesHoverDesktop: wrapperBdShadowStylesHoverDesktop,
+		stylesHoverTab: wrapperBdShadowStylesHoverTab,
+		stylesHoverMobile: wrapperBdShadowStylesHoverMobile,
+		transitionStyle: wrapperBdShadowTransitionStyle,
+	} = generateBorderShadowStyles({
+		controlName: wrapperBorderShadow,
+		attributes,
+	});
+
+	const {
+		rangeStylesDesktop: wrapperMaxWidthDesktop,
+		rangeStylesTab: wrapperMaxWidthTab,
+		rangeStylesMobile: wrapperMaxWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: wrapperWidth,
+		property: "max-width",
+		attributes,
+	});
+
+	//header typography
+	const {
+		typoStylesDesktop: headerTypoStylesDesktop,
+		typoStylesTab: headerTypoStylesTab,
+		typoStylesMobile: headerTypoStylesMobile,
+	} = generateTypographyStyles({
+		attributes,
+		prefixConstant: typoPrefix_header,
+	});
+
+	//Content typography
+	const {
+		typoStylesDesktop: contentTypoStylesDesktop,
+		typoStylesTab: contentTypoStylesTab,
+		typoStylesMobile: contentTypoStylesMobile,
+	} = generateTypographyStyles({
+		attributes,
+		prefixConstant: typoPrefix_content,
+	});
+
+	// image border shadow
+	const {
+		styesDesktop: imageBorderDesktop,
+		styesTab: imageBorderTab,
+		styesMobile: imageBorderMobile,
+		stylesHoverDesktop: imageBorderHoverDesktop,
+		stylesHoverTab: imageBorderHoverTab,
+		stylesHoverMobile: imageBorderHoverMobile,
+		transitionStyle: imageTransitionStyle,
+	} = generateBorderShadowStyles({
+		controlName: imageBorderShadow,
+		attributes,
+		noShadow: true,
+	});
+
+	const imageAlign =
+		imageAlignment === "left"
+			? "margin: 0;"
+			: imageAlignment === "right"
+			? "margin: 0 0 0 auto;"
+			: "margin: 0 auto;";
+
+	const desktopStyles = `
+		.eb-interactive-promo-wrapper.${blockId} {
+			${wrapperMarginStylesDesktop}
+			${wrapperPaddingStylesDesktop}
+			${wrapperBdShadowStyesDesktop}
+			transition: ${wrapperBdShadowTransitionStyle};
+		}
+
+		.eb-interactive-promo-wrapper.${blockId}:hover {
+			${wrapperBdShadowStylesHoverDesktop}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
+			${headerTypoStylesDesktop}
+			${headerColor ? `color: ${headerColor};` : ""}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
+			${contentTypoStylesDesktop}
+			color: ${contentColor};
+		}
+
+		${
+			isWrapperMaxWidth
+				? `
+				.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
+					${wrapperMaxWidthDesktop}
+				}
+			`
+				: ""
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
+			${imageAlign}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
+			${imageBorderDesktop}
+			position: relative;
+			overflow: hidden;
+			transition: ${imageTransitionStyle};
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo img {
+			min-width: 100%;
+		}
+		
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
+			${imageBorderHoverDesktop}
+		}
+	`;
+	const tabStyles = `
+		.eb-interactive-promo-wrapper.${blockId} {
+			${wrapperMarginStylesTab}
+			${wrapperPaddingStylesTab}
+			${wrapperBdShadowStyesTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId}:hover {
+			${wrapperBdShadowStylesHoverTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
+			${headerTypoStylesTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
+			${contentTypoStylesTab}
+		}
+
+		${
+			isWrapperMaxWidth
+				? `
+				.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
+					${wrapperMaxWidthTab}
+				}
+			`
+				: ""
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
+			${imageBorderTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
+			${imageBorderHoverTab}
+		}
+	`;
+	const mobileStyles = `
+		.eb-interactive-promo-wrapper.${blockId} {
+			${wrapperMarginStylesMobile}
+			${wrapperPaddingStylesMobile}
+			${wrapperBdShadowStyesMobile}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId}:hover {
+			${wrapperBdShadowStylesHoverMobile}
+		}
+		
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
+			${headerTypoStylesMobile}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
+			${contentTypoStylesMobile}
+		}
+
+		${
+			isWrapperMaxWidth
+				? `
+				.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
+					${wrapperMaxWidthMobile}
+				}
+			`
+				: ""
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
+			${imageBorderMobile}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
+			${imageBorderHoverMobile}
+		}
+	`;
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
@@ -238,199 +373,60 @@ const Edit = (props) => {
 				/>
 			</Toolbar>
 		</BlockControls>,
-
-		<div className="eb-interactive-promo-container">
-			<div className="eb-interactive-promo hover-effect">
-				<figure className={`effect-${effectName}`} style={figureStyles}>
-					<img src={imageURL} alt={imageAltTag} style={imageStyles} />
-					<figcaption>
-						<h2 className="eb-interactive-promo-header" style={headerStyles}>
-							{header}
-						</h2>
-						<p className="eb-interactive-promo-content" style={contentStyles}>
-							{content}
-						</p>
-						<a
-							href={link}
-							target={newWindow ? "_blank" : "_self"}
-							rel="noopener noreferrer"
-						/>
-					</figcaption>
-				</figure>
+		<div {...blockProps}>
+			<style>
+				{`
+				 ${desktopAllStyles}
+ 
+				 /* mimmikcssStart */
+ 
+				 ${resOption === "Tablet" ? tabAllStyles : " "}
+				 ${resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " "}
+ 
+				 /* mimmikcssEnd */
+ 
+				 @media all and (max-width: 1024px) {	
+ 
+					 /* tabcssStart */			
+					 ${softMinifyCssStrings(tabAllStyles)}
+					 /* tabcssEnd */			
+				 
+				 }
+				 
+				 @media all and (max-width: 767px) {
+					 
+					 /* mobcssStart */			
+					 ${softMinifyCssStrings(mobileAllStyles)}
+					 /* mobcssEnd */			
+				 
+				 }
+				 `}
+			</style>
+			<div className={`eb-interactive-promo-wrapper ${blockId}`}>
+				<div
+					className="eb-interactive-promo-container"
+					data-effect={effectName}
+				>
+					<div className="eb-interactive-promo hover-effect">
+						<figure className={`effect-${effectName}`}>
+							<img src={imageURL} alt={imageAltTag} />
+							<figcaption>
+								<h2 className="eb-interactive-promo-header">{header}</h2>
+								<p className="eb-interactive-promo-content">{content}</p>
+								{link && (
+									<a
+										href={link}
+										target={newWindow ? "_blank" : "_self"}
+										rel="noopener noreferrer"
+									/>
+								)}
+							</figcaption>
+						</figure>
+					</div>
+				</div>
 			</div>
 		</div>,
 	];
 };
 
 export default Edit;
-
-// export default class Edit extends Component {
-// 	render() {
-// 		const { isSelected, attributes, setAttributes } = this.props;
-// 		const {
-// 			header,
-// 			content,
-// 			effectName,
-// 			imageURL,
-// 			imageID,
-// 			imageHeight,
-// 			imageWidth,
-// 			imageAltTag,
-// 			headerColor,
-// 			contentColor,
-// 			newWindow,
-// 			borderTop,
-// 			borderRight,
-// 			borderBottom,
-// 			borderLeft,
-// 			borderStyle,
-// 			borderColor,
-// 			borderRadius,
-// 			shadowColor,
-// 			hOffset,
-// 			vOffset,
-// 			shadowBlur,
-// 			shadowSpread,
-// 			link,
-// 			radiusUnit,
-// 			headerFontFamily,
-// 			headerFontSize,
-// 			headerFontSizeUnit,
-// 			headerFontWeight,
-// 			headerTextTransform,
-// 			headerTextDecoration,
-// 			headerLetterSpacing,
-// 			headerLetterSpacingUnit,
-// 			headerLineHeight,
-// 			headerLineHeightUnit,
-// 			contentFontFamily,
-// 			contentFontSize,
-// 			contentFontSizeUnit,
-// 			contentFontWeight,
-// 			contentTextTransform,
-// 			contentTextDecoration,
-// 			contentLetterSpacing,
-// 			contentLetterSpacingUnit,
-// 			contentLineHeight,
-// 			contentLineHeightUnit,
-// 		} = attributes;
-
-// 		const headerStyles = {
-// 			color: headerColor || "#ffffff",
-// 			fontFamily: headerFontFamily,
-// 			fontSize: headerFontSize
-// 				? `${headerFontSize}${headerFontSizeUnit}`
-// 				: undefined,
-// 			fontWeight: headerFontWeight,
-// 			textTransform: headerTextTransform,
-// 			textDecoration: headerTextDecoration,
-// 			letterSpacing: headerLetterSpacing
-// 				? `${headerLetterSpacing}${headerLetterSpacingUnit}`
-// 				: undefined,
-// 			lineHeight: headerLineHeight
-// 				? `${headerLineHeight}${headerLineHeightUnit}`
-// 				: undefined,
-// 		};
-
-// 		const contentStyles = {
-// 			color: contentColor || "#ffffff",
-// 			fontFamily: contentFontFamily,
-// 			fontSize: contentFontSize
-// 				? `${contentFontSize}${contentFontSizeUnit}`
-// 				: undefined,
-// 			fontWeight: contentFontWeight,
-// 			textTransform: contentTextTransform,
-// 			textDecoration: contentTextDecoration,
-// 			letterSpacing: contentLetterSpacing
-// 				? `${contentLetterSpacing}${contentLetterSpacingUnit}`
-// 				: undefined,
-// 			lineHeight: contentLineHeight
-// 				? `${contentLineHeight}${contentLineHeightUnit}`
-// 				: undefined,
-// 		};
-
-// 		const figureStyles = {
-// 			height: imageHeight ? `${imageHeight}px` : "100%",
-// 			width: imageWidth ? `${imageWidth}px` : "100%",
-// 			position: "relative",
-// 			overflow: "hidden",
-// 			borderWidth: `${borderTop}px ${borderRight}px ${borderBottom}px ${borderLeft}px`,
-// 			borderStyle: borderStyle,
-// 			borderColor: borderColor,
-// 			borderRadius: `${borderRadius || 0}${radiusUnit}`,
-// 			boxShadow: `${hOffset || 0}px ${vOffset || 0}px ${shadowBlur || 0}px ${
-// 				shadowSpread || 0
-// 			}px ${shadowColor || "#000000"}`,
-// 		};
-
-// 		const imageStyles = {
-// 			minWidth: "100%",
-// 		};
-
-// 		if (!imageURL) {
-// 			return (
-// 				<MediaPlaceholder
-// 					onSelect={(media) =>
-// 						setAttributes({
-// 							imageURL: media.url,
-// 							imageID: media.id,
-// 						})
-// 					}
-// 					allowTypes={["image"]}
-// 					labels={{
-// 						title: "Images",
-// 						instructions:
-// 							"Drag media file, upload or select files from your library.",
-// 					}}
-// 				/>
-// 			);
-// 		}
-
-// 		return [
-// 			isSelected && <Inspector {...this.props} />,
-// 			<BlockControls>
-// 				<Toolbar>
-// 					<MediaUpload
-// 						onSelect={(media) =>
-// 							setAttributes({
-// 								imageURL: media.url,
-// 								imageID: media.id,
-// 							})
-// 						}
-// 						allowedTypes={["image"]}
-// 						value={imageID}
-// 						render={({ open }) => (
-// 							<Button
-// 								className="components-toolbar__control"
-// 								label={__("Edit Image")}
-// 								icon="edit"
-// 								onClick={open}
-// 							/>
-// 						)}
-// 					/>
-// 				</Toolbar>
-// 			</BlockControls>,
-
-// 			<div className="eb-interactive-promo-container">
-// 				<div className="eb-interactive-promo hover-effect">
-// 					<figure className={`effect-${effectName}`} style={figureStyles}>
-// 						<img src={imageURL} alt={imageAltTag} style={imageStyles} />
-// 						<figcaption>
-// 							<h2 className="eb-interactive-promo-header" style={headerStyles}>
-// 								{header}
-// 							</h2>
-// 							<p className="eb-interactive-promo-content" style={contentStyles}>
-// 								{content}
-// 							</p>
-// 							<a
-// 								href={link}
-// 								target={newWindow ? "_blank" : "_self"}
-// 								rel="noopener noreferrer"
-// 							/>
-// 						</figcaption>
-// 					</figure>
-// 				</div>
-// 			</div>,
-// 		];
-// 	}
-// }

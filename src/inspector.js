@@ -23,11 +23,12 @@ const { select } = wp.data;
 import {
 	ALIGNMENT,
 	EFFECTS_LIST,
-	WRAPPER_UNITS,
-	wrapperWidth,
+	IMAGE_HEIGHT,
+	IMAGE_WIDTH,
+	imageHeight,
+	imageWidth,
 	wrapperMargin,
 	wrapperPadding,
-	wrapperBorderShadow,
 	imageBorderShadow,
 } from "./constants";
 import {
@@ -41,6 +42,7 @@ import ResponsiveRangeController from "../util/responsive-range-control";
 import TypographyDropdown from "../util/typography-control-v2";
 import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
 import BorderShadowControl from "../util/border-shadow-control";
+import GradientColorControl from "../util/gradient-color-controller";
 import {
 	mimmikCssForResBtns,
 	mimmikCssOnPreviewBtnClickWhileBlockSelected,
@@ -58,8 +60,10 @@ const Inspector = ({ attributes, setAttributes }) => {
 		newWindow,
 		headerColor,
 		contentColor,
-		isWrapperMaxWidth,
 		imageAlignment,
+		isBackgroundGradient,
+		backgroundColor,
+		backgroundGradient,
 	} = attributes;
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
 	useEffect(() => {
@@ -123,7 +127,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 						<div className={"eb-tab-controls " + tab.name}>
 							{tab.name === "general" && (
 								<>
-									<PanelBody title={__("Content")}>
+									<PanelBody>
 										<BaseControl label={__("Background Image")}>
 											<MediaUpload
 												onSelect={(media) =>
@@ -153,15 +157,31 @@ const Inspector = ({ attributes, setAttributes }) => {
 												/>
 											)}
 										</BaseControl>
-										{imageURL && (
-											<TextControl
-												label={__("Image alt tag")}
-												value={imageAltTag}
-												onChange={(newValue) =>
-													setAttributes({ imageAltTag: newValue })
-												}
-											/>
-										)}
+										<ResponsiveRangeController
+											baseLabel={__("Height", "interactive-promo")}
+											controlName={imageHeight}
+											resRequiredProps={resRequiredProps}
+											min={200}
+											max={1000}
+											step={1}
+											units={IMAGE_HEIGHT}
+										/>
+										<ResponsiveRangeController
+											baseLabel={__("Width", "interactive-promo")}
+											controlName={imageWidth}
+											resRequiredProps={resRequiredProps}
+											min={0}
+											max={1000}
+											step={1}
+											units={IMAGE_WIDTH}
+										/>
+										<TextControl
+											label={__("Image alt tag", "interactive-promo")}
+											value={imageAltTag}
+											onChange={(newValue) =>
+												setAttributes({ imageAltTag: newValue })
+											}
+										/>
 										<TextControl
 											label={__("Header")}
 											value={header}
@@ -182,12 +202,27 @@ const Inspector = ({ attributes, setAttributes }) => {
 											checked={newWindow}
 											onChange={() => setAttributes({ newWindow: !newWindow })}
 										/>
-									</PanelBody>
-
-									<PanelBody
-										title={__("Settings", "interactive-promo")}
-										initialOpen={false}
-									>
+										<BaseControl>
+											<h3 className="eb-control-title">
+												{__("Alignment", "interactive-promo")}
+											</h3>
+											<ButtonGroup>
+												{ALIGNMENT.map((item) => (
+													<Button
+														isLarge
+														isPrimary={imageAlignment === item.value}
+														isSecondary={imageAlignment !== item.value}
+														onClick={() =>
+															setAttributes({
+																imageAlignment: item.value,
+															})
+														}
+													>
+														{item.label}
+													</Button>
+												))}
+											</ButtonGroup>
+										</BaseControl>
 										<SelectControl
 											label={__("Promo Effect")}
 											value={effectName}
@@ -196,35 +231,47 @@ const Inspector = ({ attributes, setAttributes }) => {
 												setAttributes({ effectName: newEffect })
 											}
 										/>
-										<ToggleControl
-											label={__(
-												"Set Max Width For The Container",
-												"interactive-promo"
-											)}
-											checked={isWrapperMaxWidth}
-											onChange={() =>
-												setAttributes({ isWrapperMaxWidth: !isWrapperMaxWidth })
-											}
-										/>
-										{isWrapperMaxWidth && (
-											<ResponsiveRangeController
-												baseLabel={__(
-													"Container Max Width",
-													"interactive-promo"
-												)}
-												controlName={wrapperWidth}
-												resRequiredProps={resRequiredProps}
-												min={0}
-												max={1000}
-												step={1}
-												units={WRAPPER_UNITS}
-											/>
-										)}
 									</PanelBody>
 								</>
 							)}
 							{tab.name === "styles" && (
 								<>
+									<PanelBody>
+										<BaseControl>
+											<h3 className="eb-control-title">
+												{__("Background Color", "interactive-promo")}
+											</h3>
+										</BaseControl>
+										<ToggleControl
+											label={__("Show Gradient Color", "interactive-promo")}
+											checked={isBackgroundGradient}
+											onChange={() => {
+												setAttributes({
+													isBackgroundGradient: !isBackgroundGradient,
+												});
+											}}
+										/>
+										{isBackgroundGradient || (
+											<ColorControl
+												label={__("Color", "interactive-promo")}
+												color={backgroundColor}
+												onChange={(backgroundColor) =>
+													setAttributes({ backgroundColor })
+												}
+											/>
+										)}
+										{isBackgroundGradient && (
+											<>
+												<GradientColorControl
+													label={__("Gradient Color", "interactive-promo")}
+													gradientColor={backgroundGradient}
+													onChange={(backgroundGradient) =>
+														setAttributes({ backgroundGradient })
+													}
+												/>
+											</>
+										)}
+									</PanelBody>
 									<PanelBody
 										title={__("Header", "interactive-promo")}
 										initialOpen={false}
@@ -263,42 +310,6 @@ const Inspector = ({ attributes, setAttributes }) => {
 											/>
 										</>
 									</PanelBody>
-									<PanelBody
-										title={__("Image", "interactive-promo")}
-										initialOpen={false}
-									>
-										<BaseControl>
-											<h3 className="eb-control-title">
-												{__("Alignment", "interactive-promo")}
-											</h3>
-											<ButtonGroup>
-												{ALIGNMENT.map((item) => (
-													<Button
-														isLarge
-														isPrimary={imageAlignment === item.value}
-														isSecondary={imageAlignment !== item.value}
-														onClick={() =>
-															setAttributes({
-																imageAlignment: item.value,
-															})
-														}
-													>
-														{item.label}
-													</Button>
-												))}
-											</ButtonGroup>
-										</BaseControl>
-										<BaseControl>
-											<h3 className="eb-control-title">
-												{__("Border", "interactive-promo")}
-											</h3>
-										</BaseControl>
-										<BorderShadowControl
-											controlName={imageBorderShadow}
-											resRequiredProps={resRequiredProps}
-											noShadow
-										/>
-									</PanelBody>
 								</>
 							)}
 							{tab.name === "advance" && (
@@ -320,7 +331,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										initialOpen={false}
 									>
 										<BorderShadowControl
-											controlName={wrapperBorderShadow}
+											controlName={imageBorderShadow}
 											resRequiredProps={resRequiredProps}
 										/>
 									</PanelBody>

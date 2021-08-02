@@ -19,9 +19,11 @@
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
+define('INTERACTIVE_PROMO_DIR', dirname( __FILE__ ));
 
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
+require_once __DIR__ . '/includes/admin-enqueue.php';
 require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_interactive_promo_block_init() {
@@ -54,25 +56,25 @@ function create_block_interactive_promo_block_init() {
 		filemtime( "$dir/$editor_css" )
 	);
 
-	$style_css = 'build/style-index.css';
+	$hover_style = 'assets/css/hover-effects.css';
 	wp_register_style(
-		'create-block-interactive-promo-block',
-		plugins_url( $style_css, __FILE__ ),
+		'hover-effects-style',
+		plugins_url( $hover_style, __FILE__ ),
 		array(),
-		filemtime( "$dir/$style_css" )
+		filemtime( "$dir/$hover_style" ),
+		'all'
 	);
-
-  wp_enqueue_style(
-    'hover-effects-style',
-    plugins_url('src/css/hover-effects.css', __FILE__),
-    array()
-  );
 
 	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/interactive-promo' ) ) {
     register_block_type( 'interactive-promo/interactive-promo', array(
       'editor_script' => 'create-block-interactive-promo-block-editor',
       'editor_style'  => 'create-block-interactive-promo-block-editor',
-      'style'         => 'create-block-interactive-promo-block',
+	  'render_callback' => function( $attributes, $content ) {
+		if( !is_admin() ) {
+            wp_enqueue_style('hover-effects-style',);
+		}
+		return $content;
+	}
     ) );
   }
 }

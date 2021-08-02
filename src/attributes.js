@@ -2,8 +2,10 @@ import {
 	wrapperWidth,
 	wrapperMargin,
 	wrapperPadding,
-	wrapperBorderShadow,
 	imageBorderShadow,
+	imageHeight,
+	imageWidth,
+	imageBackground,
 } from "./constants";
 import * as typoPrefixs from "./constants/typographyPrefixConstants";
 
@@ -12,6 +14,7 @@ import {
 	generateTypographyAttributes,
 	generateBorderShadowAttributes,
 	generateDimensionsAttributes,
+	generateBackgroundAttributes,
 } from "../util/helpers";
 
 const attributes = {
@@ -92,11 +95,23 @@ const attributes = {
 		type: "string",
 		default: "center",
 	},
+	isBackgroundGradient: {
+		type: "boolean",
+		default: false,
+	},
+	backgroundColor: {
+		type: "string",
+	},
+	backgroundGradient: {
+		type: "string",
+	},
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
 	...generateResponsiveRangeAttributes(wrapperWidth, {
 		defaultRange: 480,
 	}),
+	...generateResponsiveRangeAttributes(imageHeight),
+	...generateResponsiveRangeAttributes(imageWidth),
 	// dimension attributes
 	...generateDimensionsAttributes(wrapperMargin, {
 		top: 28,
@@ -107,8 +122,9 @@ const attributes = {
 	}),
 	...generateDimensionsAttributes(wrapperPadding),
 	// border & shadow attributes
-	...generateBorderShadowAttributes(wrapperBorderShadow),
-	...generateBorderShadowAttributes(imageBorderShadow, { noShadow: true }),
+	...generateBorderShadowAttributes(imageBorderShadow),
+	// background control
+	...generateBackgroundAttributes(imageBackground),
 };
 
 export default attributes;

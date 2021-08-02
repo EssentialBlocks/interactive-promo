@@ -72,6 +72,16 @@ export const WRAPPER_UNITS = [
 	{ label: "%", value: "%" },
 ];
 
+export const IMAGE_HEIGHT = [
+	{ label: "px", value: "px" },
+	{ label: "vh", value: "vh" },
+];
+
+export const IMAGE_WIDTH = [
+	{ label: "px", value: "px" },
+	{ label: "vw", value: "vw" },
+];
+
 export const ALIGNMENT = [
 	{ label: __(<Dashicon icon={"editor-alignleft"} />), value: "left" },
 	{ label: __(<Dashicon icon={"editor-aligncenter"} />), value: "center" },
@@ -80,6 +90,8 @@ export const ALIGNMENT = [
 
 // Responsive Range Controller
 export const wrapperWidth = "wrpWidth";
+export const imageHeight = "imgHeight";
+export const imageWidth = "imgWidth";
 
 // responsive dimension controller
 export const wrapperMargin = "wrpMargin";
@@ -88,3 +100,6 @@ export const wrapperPadding = "wrpPadding";
 // border & shadow
 export const wrapperBorderShadow = "wrpBrdShdw";
 export const imageBorderShadow = "imgBrdShdw";
+
+// background control
+export const imageBackground = "imgBg";

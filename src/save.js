@@ -15,8 +15,6 @@ const Save = ({ attributes }) => {
 		link,
 	} = attributes;
 
-	console.log(effectName);
-
 	return (
 		<div {...useBlockProps.save()}>
 			<div className={`eb-interactive-promo-wrapper ${blockId}`}>

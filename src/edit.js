@@ -18,11 +18,11 @@ const { select } = wp.data;
 import "./editor.scss";
 import Inspector from "./inspector";
 import {
-	wrapperWidth,
 	wrapperMargin,
 	wrapperPadding,
-	wrapperBorderShadow,
 	imageBorderShadow,
+	imageHeight,
+	imageWidth,
 } from "./constants";
 import {
 	typoPrefix_header,
@@ -55,9 +55,13 @@ const Edit = (props) => {
 		contentColor,
 		newWindow,
 		link,
-		isWrapperMaxWidth,
 		imageAlignment,
+		isBackgroundGradient,
+		backgroundColor,
+		backgroundGradient,
 	} = attributes;
+
+	console.log(isBackgroundGradient, backgroundColor, backgroundGradient);
 
 	if (!imageURL) {
 		return (
@@ -99,29 +103,6 @@ const Edit = (props) => {
 		attributes,
 	});
 
-	const {
-		styesDesktop: wrapperBdShadowStyesDesktop,
-		styesTab: wrapperBdShadowStyesTab,
-		styesMobile: wrapperBdShadowStyesMobile,
-		stylesHoverDesktop: wrapperBdShadowStylesHoverDesktop,
-		stylesHoverTab: wrapperBdShadowStylesHoverTab,
-		stylesHoverMobile: wrapperBdShadowStylesHoverMobile,
-		transitionStyle: wrapperBdShadowTransitionStyle,
-	} = generateBorderShadowStyles({
-		controlName: wrapperBorderShadow,
-		attributes,
-	});
-
-	const {
-		rangeStylesDesktop: wrapperMaxWidthDesktop,
-		rangeStylesTab: wrapperMaxWidthTab,
-		rangeStylesMobile: wrapperMaxWidthMobile,
-	} = generateResponsiveRangeStyles({
-		controlName: wrapperWidth,
-		property: "max-width",
-		attributes,
-	});
-
 	//header typography
 	const {
 		typoStylesDesktop: headerTypoStylesDesktop,
@@ -142,19 +123,39 @@ const Edit = (props) => {
 		prefixConstant: typoPrefix_content,
 	});
 
-	// image border shadow
+	// image height
 	const {
-		styesDesktop: imageBorderDesktop,
-		styesTab: imageBorderTab,
-		styesMobile: imageBorderMobile,
-		stylesHoverDesktop: imageBorderHoverDesktop,
-		stylesHoverTab: imageBorderHoverTab,
-		stylesHoverMobile: imageBorderHoverMobile,
-		transitionStyle: imageTransitionStyle,
+		rangeStylesDesktop: imageHeightDesktop,
+		rangeStylesTab: imageHeightTab,
+		rangeStylesMobile: imageHeightMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: imageHeight,
+		property: "height",
+		attributes,
+	});
+
+	// image width
+	const {
+		rangeStylesDesktop: imageWidthDesktop,
+		rangeStylesTab: imageWidthTab,
+		rangeStylesMobile: imageWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: imageWidth,
+		property: "width",
+		attributes,
+	});
+
+	const {
+		styesDesktop: imageBdShadowStyesDesktop,
+		styesTab: imageBdShadowStyesTab,
+		styesMobile: imageBdShadowStyesMobile,
+		stylesHoverDesktop: imageBdShadowStylesHoverDesktop,
+		stylesHoverTab: imageBdShadowStylesHoverTab,
+		stylesHoverMobile: imageBdShadowStylesHoverMobile,
+		transitionStyle: imageBdShadowTransitionStyle,
 	} = generateBorderShadowStyles({
 		controlName: imageBorderShadow,
 		attributes,
-		noShadow: true,
 	});
 
 	const imageAlign =
@@ -168,12 +169,6 @@ const Edit = (props) => {
 		.eb-interactive-promo-wrapper.${blockId} {
 			${wrapperMarginStylesDesktop}
 			${wrapperPaddingStylesDesktop}
-			${wrapperBdShadowStyesDesktop}
-			transition: ${wrapperBdShadowTransitionStyle};
-		}
-
-		.eb-interactive-promo-wrapper.${blockId}:hover {
-			${wrapperBdShadowStylesHoverDesktop}
 		}
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
@@ -186,44 +181,35 @@ const Edit = (props) => {
 			color: ${contentColor};
 		}
 
-		${
-			isWrapperMaxWidth
-				? `
-				.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
-					${wrapperMaxWidthDesktop}
-				}
-			`
-				: ""
-		}
-
-		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
-			${imageAlign}
-		}
-
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
-			${imageBorderDesktop}
+			${imageHeightDesktop.replace(/\D/g, "") ? imageHeightDesktop : "height: 100%;"}
+			${imageWidthDesktop.replace(/\D/g, "") ? imageWidthDesktop : "width: 100%;"}
+			${imageBdShadowStyesDesktop}
+			${imageAlign}
+			${
+				isBackgroundGradient
+					? `background: ${backgroundGradient};`
+					: backgroundColor
+					? `background: ${backgroundColor};`
+					: ""
+			}
 			position: relative;
 			overflow: hidden;
-			transition: ${imageTransitionStyle};
-		}
-
-		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo img {
-			min-width: 100%;
+			transition: ${imageBdShadowTransitionStyle};
 		}
 		
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
-			${imageBorderHoverDesktop}
+			${imageBdShadowStylesHoverDesktop}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure img {
+			min-width: 100%;
 		}
 	`;
 	const tabStyles = `
 		.eb-interactive-promo-wrapper.${blockId} {
 			${wrapperMarginStylesTab}
 			${wrapperPaddingStylesTab}
-			${wrapperBdShadowStyesTab}
-		}
-
-		.eb-interactive-promo-wrapper.${blockId}:hover {
-			${wrapperBdShadowStylesHoverTab}
 		}
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
@@ -234,33 +220,20 @@ const Edit = (props) => {
 			${contentTypoStylesTab}
 		}
 
-		${
-			isWrapperMaxWidth
-				? `
-				.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
-					${wrapperMaxWidthTab}
-				}
-			`
-				: ""
-		}
-
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
-			${imageBorderTab}
+			${imageHeightTab.replace(/\D/g, "") ? imageHeightTab : "height: 100%;"}
+			${imageWidthTab.replace(/\D/g, "") ? imageWidthTab : "width: 100%;"}
+			${imageBdShadowStyesTab}
 		}
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
-			${imageBorderHoverTab}
+			${imageBdShadowStylesHoverTab}
 		}
 	`;
 	const mobileStyles = `
 		.eb-interactive-promo-wrapper.${blockId} {
 			${wrapperMarginStylesMobile}
 			${wrapperPaddingStylesMobile}
-			${wrapperBdShadowStyesMobile}
-		}
-
-		.eb-interactive-promo-wrapper.${blockId}:hover {
-			${wrapperBdShadowStylesHoverMobile}
 		}
 		
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
@@ -271,22 +244,14 @@ const Edit = (props) => {
 			${contentTypoStylesMobile}
 		}
 
-		${
-			isWrapperMaxWidth
-				? `
-				.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo {
-					${wrapperMaxWidthMobile}
-				}
-			`
-				: ""
-		}
-
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
-			${imageBorderMobile}
+			${imageHeightMobile.replace(/\D/g, "") ? imageHeightMobile : "height: 100%;"}
+			${imageWidthMobile.replace(/\D/g, "") ? imageWidthMobile : "width: 100%;"}
+			${imageBdShadowStyesMobile}
 		}
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
-			${imageBorderHoverMobile}
+			${imageBdShadowStylesHoverMobile}
 		}
 	`;
 

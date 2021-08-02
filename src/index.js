@@ -1,7 +1,6 @@
 const { registerBlockType } = wp.blocks;
 const { __ } = wp.i18n;
 
-import "./style.scss";
 import Edit from "./edit";
 import save from "./save";
 import icon from "./icon";

@@ -1,5 +1,5 @@
 === Interactive Promo ===
-Contributors: wpdevteam, re_enter_rupok, Asif2BD, alam789
+Contributors: wpdevteam, re_enter_rupok, Asif2BD, alam789, fencermonir
 Tags: block, blocks, promo, card, cta, interactive, animated, image block, gutenberg, gutenberg blocks
 Requires at least: 5.0
 Tested up to: 5.5
@@ -80,6 +80,14 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.1.0 (dev) =
+* Added: Responsive Controls
+* Added: Margin, Padding Option In Wrapper
+* Added: Alignment Option
+* Added: Advance and Responsive Typography Option
+* Added: Advanced and Responsive Border Radius and Shadow Option
+* improved: Inspactor Panel Design
 
 = 1.0.1 =
 * Added: Keywords

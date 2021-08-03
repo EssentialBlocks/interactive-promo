@@ -230,6 +230,7 @@ const Edit = (props) => {
 			${imageBdShadowStylesHoverTab}
 		}
 	`;
+
 	const mobileStyles = `
 		.eb-interactive-promo-wrapper.${blockId} {
 			${wrapperMarginStylesMobile}

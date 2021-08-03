@@ -26,47 +26,6 @@ export const EFFECTS_LIST = [
 	{ label: __("Sarah"), value: "sarah" },
 ];
 
-export const FONT_SIZES = [
-	{ name: __("Small"), size: 12, slug: "s" },
-	{ name: __("Medium"), size: 16, slug: "m" },
-	{ name: __("Large"), size: 24, slug: "l" },
-	{ name: __("Extra Large"), size: 36, slug: "xl" },
-];
-
-export const BORDER_STYLES = [
-	{ label: __("None"), value: "none" },
-	{ label: __("Dashed"), value: "dashed" },
-	{ label: __("Solid"), value: "solid" },
-	{ label: __("Dotted"), value: "dotted" },
-	{ label: __("Double"), value: "double" },
-	{ label: __("Groove"), value: "groove" },
-	{ label: __("Inset"), value: "inset" },
-	{ label: __("Outset"), value: "outset" },
-	{ label: __("Ridge"), value: "ridge" },
-];
-
-export const FONT_WEIGHTS = [
-	{ label: __("Lighter"), value: "lighter" },
-	{ label: __("Normal"), value: "normal" },
-	{ label: __("Bold"), value: "bold" },
-	{ label: __("Bolder"), value: "bolder" },
-];
-
-export const TEXT_TRANSFORM = [
-	{ label: __("None"), value: "none" },
-	{ label: __("Lowercase"), value: "lowercase" },
-	{ label: __("Capitalize"), value: "capitalize" },
-	{ label: __("Uppercase"), value: "uppercase" },
-];
-
-export const TEXT_DECORATION = [
-	{ label: __("Initial"), value: "initial" },
-	{ label: __("Overline"), value: "overline" },
-	{ label: __("Line Through"), value: "line-through" },
-	{ label: __("Underline"), value: "underline" },
-	{ label: __("Underline Oveline"), value: "underline overline" },
-];
-
 export const WRAPPER_UNITS = [
 	{ label: "px", value: "px" },
 	{ label: "%", value: "%" },
@@ -89,7 +48,6 @@ export const ALIGNMENT = [
 ];
 
 // Responsive Range Controller
-export const wrapperWidth = "wrpWidth";
 export const imageHeight = "imgHeight";
 export const imageWidth = "imgWidth";
 
@@ -100,6 +58,3 @@ export const wrapperPadding = "wrpPadding";
 // border & shadow
 export const wrapperBorderShadow = "wrpBrdShdw";
 export const imageBorderShadow = "imgBrdShdw";
-
-// background control
-export const imageBackground = "imgBg";

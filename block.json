@@ -5,6 +5,5 @@
 	"keywords": ["promo", "interactive", "essential"],
 	"description": "Engage your potential audience with an exciting promo",
 	"textdomain": "interactive-promo",
-	"editorScript": "file:./build/index.js",
-	"style": "file:./build/style-index.css"
+	"editorScript": "file:./build/index.js"
 }

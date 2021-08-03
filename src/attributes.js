@@ -101,8 +101,8 @@ const attributes = {
 	// typography attributes
 	...generateTypographyAttributes(Object.values(typoPrefixs)),
 	// responsive range controller
-	...generateResponsiveRangeAttributes(imageHeight),
-	...generateResponsiveRangeAttributes(imageWidth),
+	...generateResponsiveRangeAttributes(imageHeight, { noUnits: true }),
+	...generateResponsiveRangeAttributes(imageWidth, { noUnits: true }),
 	// dimension attributes
 	...generateDimensionsAttributes(wrapperMargin, {
 		top: 28,

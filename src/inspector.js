@@ -164,7 +164,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											min={200}
 											max={1000}
 											step={1}
-											units={IMAGE_HEIGHT}
+											noUnits
 										/>
 										<ResponsiveRangeController
 											baseLabel={__("Width", "interactive-promo")}
@@ -173,7 +173,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											min={0}
 											max={1000}
 											step={1}
-											units={IMAGE_WIDTH}
+											noUnits
 										/>
 										<TextControl
 											label={__("Image alt tag", "interactive-promo")}

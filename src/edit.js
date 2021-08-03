@@ -130,6 +130,7 @@ const Edit = (props) => {
 		controlName: imageHeight,
 		property: "height",
 		attributes,
+		customUnit: "px",
 	});
 
 	// image width
@@ -141,6 +142,7 @@ const Edit = (props) => {
 		controlName: imageWidth,
 		property: "width",
 		attributes,
+		customUnit: "px",
 	});
 
 	const {

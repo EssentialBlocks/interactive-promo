@@ -61,8 +61,6 @@ const Edit = (props) => {
 		backgroundGradient,
 	} = attributes;
 
-	console.log(isBackgroundGradient, backgroundColor, backgroundGradient);
-
 	if (!imageURL) {
 		return (
 			<MediaPlaceholder

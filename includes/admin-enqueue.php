@@ -9,6 +9,7 @@ class InteractivePromoAdmin
     public function enqueue_styles() {
         if ($this->eb_is_edit_page()) {
             // hover effects
+            $hover_style = "assets/css/hover-effects.css";
             wp_enqueue_style(
                 'hover-effects-style',
                 plugins_url($hover_style, __FILE__),

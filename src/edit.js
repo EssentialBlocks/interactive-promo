@@ -140,7 +140,7 @@ const Edit = (props) => {
 		rangeStylesMobile: imageWidthMobile,
 	} = generateResponsiveRangeStyles({
 		controlName: imageWidth,
-		property: "width",
+		property: "max-width",
 		attributes,
 		customUnit: "px",
 	});
@@ -183,7 +183,7 @@ const Edit = (props) => {
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
 			${imageHeightDesktop.replace(/\D/g, "") ? imageHeightDesktop : "height: 100%;"}
-			${imageWidthDesktop.replace(/\D/g, "") ? imageWidthDesktop : "width: 100%;"}
+			${imageWidthDesktop.replace(/\D/g, "") ? imageWidthDesktop : "max-width: 100%;"}
 			${imageBdShadowStyesDesktop}
 			${imageAlign}
 			${
@@ -193,6 +193,7 @@ const Edit = (props) => {
 					? `background: ${backgroundColor};`
 					: ""
 			}
+			width: 100%;
 			position: relative;
 			overflow: hidden;
 			transition: ${imageBdShadowTransitionStyle};

@@ -223,7 +223,7 @@ const Edit = (props) => {
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
 			${imageHeightTab.replace(/\D/g, "") ? imageHeightTab : "height: 100%;"}
-			${imageWidthTab.replace(/\D/g, "") ? imageWidthTab : "width: 100%;"}
+			${imageWidthTab.replace(/\D/g, "") ? imageWidthTab : "max-width: 100%;"}
 			${imageBdShadowStyesTab}
 		}
 
@@ -248,7 +248,7 @@ const Edit = (props) => {
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
 			${imageHeightMobile.replace(/\D/g, "") ? imageHeightMobile : "height: 100%;"}
-			${imageWidthMobile.replace(/\D/g, "") ? imageWidthMobile : "width: 100%;"}
+			${imageWidthMobile.replace(/\D/g, "") ? imageWidthMobile : "max-width: 100%;"}
 			${imageBdShadowStyesMobile}
 		}
 

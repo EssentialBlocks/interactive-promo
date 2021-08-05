@@ -1,13 +1,12 @@
-import { registerBlockType } from "@wordpress/blocks";
-import { __ } from "@wordpress/i18n";
+const { registerBlockType } = wp.blocks;
+const { __ } = wp.i18n;
 
-import "./style.scss";
 import Edit from "./edit";
 import save from "./save";
 import icon from "./icon";
 import attributes from "./attributes";
 
-registerBlockType("block/interactive-promo", {
+registerBlockType("interactive-promo/interactive-promo", {
 	title: __("Interactive Promo", "interactive-promo"),
 	description: __(
 		"Engage your potential audience with exciting promo",

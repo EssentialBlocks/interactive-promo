@@ -3,14 +3,14 @@
  * Plugin Name:     Interactive Promo
  * Plugin URI:      https://essential-blocks.com
  * Description:     Engage your potential audience with an exciting promo.
- * Version:         1.0.1
+ * Version:         1.1.0
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:     interactive-promo 
+ * Text Domain:     interactive-promo
  *
- * @package         interactive-promo 
+ * @package         interactive-promo
  */
 
 /**
@@ -19,48 +19,65 @@
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
+define('INTERACTIVE_PROMO_DIR', dirname(__FILE__));
 
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
+require_once __DIR__ . '/includes/admin-enqueue.php';
+require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
-function create_block_interactive_promo_block_init() {
-	$dir = dirname( __FILE__ );
+function create_block_interactive_promo_block_init()
+{
+	$dir = dirname(__FILE__);
 
 	$script_asset_path = "$dir/build/index.asset.php";
-	if ( ! file_exists( $script_asset_path ) ) {
+	if (!file_exists($script_asset_path)) {
 		throw new Error(
 			'You need to run `npm start` or `npm run build` for the "block/interactive-promo" block first.'
 		);
 	}
-	$index_js     = 'build/index.js';
-	$script_asset = require( $script_asset_path );
+	$index_js = 'build/index.js';
 	wp_register_script(
 		'create-block-interactive-promo-block-editor',
-		plugins_url( $index_js, __FILE__ ),
-		$script_asset['dependencies'],
-		$script_asset['version']
+		plugins_url($index_js, __FILE__),
+		array(
+			'wp-blocks',
+			'wp-i18n',
+			'wp-element',
+			'wp-block-editor',
+		),
+		filemtime("$dir/$index_js")
 	);
 
-	$style_css = 'build/style-index.css';
+	$editor_css = 'build/index.css';
 	wp_register_style(
-		'create-block-interactive-promo-block',
-		plugins_url( $style_css, __FILE__ ),
+		'create-block-interactive-promo-block-editor',
+		plugins_url($editor_css, __FILE__),
 		array(),
-		filemtime( "$dir/$style_css" )
+		filemtime("$dir/$editor_css")
 	);
 
-  wp_enqueue_style(
-    'hover-effects-style',
-    plugins_url('src/css/hover-effects.css', __FILE__),
-    array()
-  );
+	$hover_style = 'assets/css/hover-effects.css';
+	wp_register_style(
+		'hover-effects-style',
+		plugins_url($hover_style, __FILE__),
+		array(),
+		filemtime("$dir/$hover_style"),
+		'all'
+	);
 
-	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/interactive-promo' ) ) {
-    register_block_type( 'block/interactive-promo', array(
-      'editor_script' => 'create-block-interactive-promo-block-editor',
-      'editor_style'  => 'create-block-interactive-promo-block-editor',
-      'style'         => 'create-block-interactive-promo-block',
-    ) );
-  }
+	if (!WP_Block_Type_Registry::get_instance()->is_registered('essential-blocks/interactive-promo')) {
+		register_block_type('interactive-promo/interactive-promo', array(
+			'editor_script' => 'create-block-interactive-promo-block-editor',
+			'editor_style' => 'create-block-interactive-promo-block-editor',
+			'render_callback' => function ($attributes, $content) {
+				if (!is_admin()) {
+					wp_enqueue_style('hover-effects-style',);
+				}
+				return $content;
+			}
+		));
+	}
 }
-add_action( 'init', 'create_block_interactive_promo_block_init' );
+
+add_action('init', 'create_block_interactive_promo_block_init');

@@ -1,4 +1,38 @@
+import {
+	wrapperMargin,
+	wrapperPadding,
+	imageBorderShadow,
+	imageHeight,
+	imageWidth,
+} from "./constants";
+import * as typoPrefixs from "./constants/typographyPrefixConstants";
+
+import {
+	generateResponsiveRangeAttributes,
+	generateTypographyAttributes,
+	generateBorderShadowAttributes,
+	generateDimensionsAttributes,
+} from "../util/helpers";
+
 const attributes = {
+	// the following 4 attributes is must required for responsive options and asset generation for frontend
+	// responsive control attributes ⬇
+	resOption: {
+		type: "string",
+		default: "Desktop",
+	},
+	// blockId attribute for making unique className and other uniqueness ⬇
+	blockId: {
+		type: "string",
+	},
+	blockRoot: {
+		type: "string",
+		default: "essential_block",
+	},
+	// blockMeta is for keeping all the styles ⬇
+	blockMeta: {
+		type: "object",
+	},
 	header: {
 		type: "string",
 		source: "text",
@@ -28,12 +62,6 @@ const attributes = {
 		type: "string",
 		default: null,
 	},
-	imageHeight: {
-		type: "number",
-	},
-	imageWidth: {
-		type: "number",
-	},
 	imageAltTag: {
 		type: "string",
 		selector: "img",
@@ -47,129 +75,45 @@ const attributes = {
 	},
 	headerColor: {
 		type: "string",
+		default: "#ffffff",
 	},
 	contentColor: {
 		type: "string",
-	},
-	linkedBorderWidth: {
-		type: "boolean",
-		default: true,
-	},
-	borderTop: {
-		type: "number",
-		default: 0,
-	},
-	borderRight: {
-		type: "number",
-	},
-	borderBottom: {
-		type: "number",
-		default: 0,
-	},
-	borderLeft: {
-		type: "number",
-		default: 0,
-	},
-	borderStyle: {
-		default: "none",
-	},
-	borderColor: {
-		type: "string",
-	},
-	borderRadius: {
-		type: "number",
-		default: 0,
-	},
-	shadowColor: {
-		type: "string",
-	},
-	hOffset: {
-		type: "number",
-	},
-	vOffset: {
-		type: "number",
-	},
-	shadowBlur: {
-		type: "number",
-	},
-	shadowSpread: {
-		type: "number",
+		default: "#ffffff",
 	},
 	link: {
 		type: "string",
 	},
-	radiusUnit: {
+	imageAlignment: {
 		type: "string",
-		default: "px",
+		default: "center",
 	},
-	headerFontFamily: {
-		type: "string",
+	isBackgroundGradient: {
+		type: "boolean",
+		default: false,
 	},
-	headerFontSize: {
-		type: "number",
-	},
-	headerFontSizeUnit: {
-		type: "string",
-		default: "px",
-	},
-	headerFontWeight: {
-		type: "string",
-		default: "normal",
-	},
-	headerLetterSpacing: {
-		type: "number",
-	},
-	headerLetterSpacingUnit: {
-		type: "string",
-		default: "px",
-	},
-	headerLineHeight: {
-		type: "number",
-	},
-	headerLineHeightUnit: {
-		type: "string",
-		default: "px",
-	},
-	headerTextTransform: {
+	backgroundColor: {
 		type: "string",
 	},
-	headerTextDecoration: {
+	backgroundGradient: {
 		type: "string",
 	},
-	contentFontFamily: {
-		type: "string",
-	},
-	contentFontSize: {
-		type: "number",
-	},
-	contentFontSizeUnit: {
-		type: "string",
-		default: "px",
-	},
-	contentFontWeight: {
-		type: "string",
-		default: "normal",
-	},
-	contentLetterSpacing: {
-		type: "number",
-	},
-	contentLetterSpacingUnit: {
-		type: "string",
-		default: "px",
-	},
-	contentLineHeight: {
-		type: "number",
-	},
-	contentLineHeightUnit: {
-		type: "string",
-		default: "px",
-	},
-	contentTextTransform: {
-		type: "string",
-	},
-	contentTextDecoration: {
-		type: "string",
-	},
+	// typography attributes
+	...generateTypographyAttributes(Object.values(typoPrefixs)),
+	// responsive range controller
+	...generateResponsiveRangeAttributes(imageHeight, { noUnits: true }),
+	...generateResponsiveRangeAttributes(imageWidth, { noUnits: true }),
+	// dimension attributes
+	...generateDimensionsAttributes(wrapperMargin, {
+		top: 28,
+		right: 0,
+		bottom: 28,
+		left: 0,
+		isLinked: false,
+	}),
+	...generateDimensionsAttributes(wrapperPadding),
+	// border & shadow attributes
+	...generateBorderShadowAttributes(imageBorderShadow),
 };
 
 export default attributes;

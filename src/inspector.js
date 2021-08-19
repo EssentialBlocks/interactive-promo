@@ -128,7 +128,9 @@ const Inspector = ({ attributes, setAttributes }) => {
 							{tab.name === "general" && (
 								<>
 									<PanelBody>
-										<BaseControl label={__("Background Image")}>
+										<BaseControl
+											label={__("Background Image", "interactive-promo")}
+										>
 											<MediaUpload
 												onSelect={(media) =>
 													setAttributes({
@@ -141,7 +143,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 													!imageURL && (
 														<Button
 															className="eb-cia-upload-button"
-															label={__("Upload Image")}
+															label={__("Upload Image", "interactive-promo")}
 															icon="format-image"
 															onClick={open}
 														/>
@@ -183,22 +185,22 @@ const Inspector = ({ attributes, setAttributes }) => {
 											}
 										/>
 										<TextControl
-											label={__("Header")}
+											label={__("Header", "interactive-promo")}
 											value={header}
 											onChange={(header) => setAttributes({ header })}
 										/>
 										<TextareaControl
-											label={__("Content")}
+											label={__("Content", "interactive-promo")}
 											value={content}
 											onChange={(content) => setAttributes({ content })}
 										/>
 										<TextControl
-											label={__("Link")}
+											label={__("Link", "interactive-promo")}
 											value={link}
 											onChange={(link) => setAttributes({ link })}
 										/>
 										<ToggleControl
-											label={__("Open in new window")}
+											label={__("Open in new window", "interactive-promo")}
 											checked={newWindow}
 											onChange={() => setAttributes({ newWindow: !newWindow })}
 										/>
@@ -224,7 +226,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											</ButtonGroup>
 										</BaseControl>
 										<SelectControl
-											label={__("Promo Effect")}
+											label={__("Promo Effect", "interactive-promo")}
 											value={effectName}
 											options={EFFECTS_LIST}
 											onChange={(newEffect) =>
@@ -278,12 +280,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 									>
 										<>
 											<TypographyDropdown
-												baseLabel={__("Typography")}
+												baseLabel={__("Typography", "interactive-promo")}
 												typographyPrefixConstant={typoPrefix_header}
 												resRequiredProps={resRequiredProps}
 											/>
 											<ColorControl
-												label={__("Color")}
+												label={__("Color", "interactive-promo")}
 												color={headerColor}
 												onChange={(headerColor) =>
 													setAttributes({ headerColor })
@@ -297,12 +299,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 									>
 										<>
 											<TypographyDropdown
-												baseLabel={__("Typography")}
+												baseLabel={__("Typography", "interactive-promo")}
 												typographyPrefixConstant={typoPrefix_content}
 												resRequiredProps={resRequiredProps}
 											/>
 											<ColorControl
-												label={__("Color")}
+												label={__("Color", "interactive-promo")}
 												color={contentColor}
 												onChange={(contentColor) =>
 													setAttributes({ contentColor })

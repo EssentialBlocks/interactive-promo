@@ -83,6 +83,7 @@ Yes, it will work with any standard WordPress theme.
 
 = 1.1.1 - 19/08/2021 =
 * Improved: Security for asset generation
+* Fixed: Deprecated warning
 
 = 1.1.0 05/08/2021 =
 * Added: Responsive controls

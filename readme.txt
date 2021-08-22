@@ -81,7 +81,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.1.1 - 19/08/2021 =
+= 1.1.1 - 22/08/2021 =
 * Improved: Security for asset generation
 * Fixed: Deprecated warning
 

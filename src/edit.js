@@ -8,7 +8,7 @@ const {
 	MediaPlaceholder,
 	MediaUpload,
 } = wp.blockEditor;
-const { Toolbar, Button } = wp.components;
+const { Toolbar, ToolbarButton, ToolbarGroup, Button } = wp.components;
 const { useEffect } = wp.element;
 const { select } = wp.data;
 
@@ -319,7 +319,7 @@ const Edit = (props) => {
 			<Inspector attributes={attributes} setAttributes={setAttributes} />
 		),
 		<BlockControls>
-			<Toolbar>
+			<Toolbar label={__("Options", "interactive-promo")}>
 				<MediaUpload
 					onSelect={(media) =>
 						setAttributes({
@@ -330,9 +330,9 @@ const Edit = (props) => {
 					allowedTypes={["image"]}
 					value={imageID}
 					render={({ open }) => (
-						<Button
+						<ToolbarButton
 							className="components-toolbar__control"
-							label={__("Edit Image")}
+							label={__("Edit Image", "interactive-promo")}
 							icon="edit"
 							onClick={open}
 						/>

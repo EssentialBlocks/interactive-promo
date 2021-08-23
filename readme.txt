@@ -101,4 +101,4 @@ Yes, it will work with any standard WordPress theme.
 
 == Upgrade Notice ==
 
-[Major Update] Improved controls and performance
+[Minor Update] Bugfix and stability

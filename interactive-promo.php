@@ -38,7 +38,7 @@ function create_block_interactive_promo_block_init()
 	$script_asset_path = INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH . "/dist/index.asset.php";
 	if (!file_exists($script_asset_path)) {
 		throw new Error(
-			'You need to run `npm start` or `npm run build` for the "interactive-promo/interactive-promo-block" block first.'
+			'You need to run `npm start` or `npm run build` for the "interactive-promo/interactive-promo" block first.'
 		);
 	}
 	$index_js = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'dist/index.js';

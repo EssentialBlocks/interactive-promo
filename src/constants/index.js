@@ -1,29 +1,29 @@
-const { __ } = wp.i18n;
-const { Dashicon } = wp.components;
+import { __ } from "@wordpress/i18n";
+import { Dashicon } from "@wordpress/components";
 
 export const EFFECTS_LIST = [
-	{ label: __("Apollo"), value: "apollo" },
-	{ label: __("Bubba"), value: "bubba" },
-	{ label: __("Chico"), value: "chico" },
-	{ label: __("Dexter"), value: "dexter" },
-	{ label: __("Duke"), value: "duke" },
-	{ label: __("Goliath"), value: "goliath" },
-	{ label: __("Jazz"), value: "jazz" },
-	{ label: __("Julia"), value: "julia" },
-	{ label: __("Layla"), value: "layla" },
-	{ label: __("Lexi"), value: "lexi" },
-	{ label: __("Lily"), value: "lily" },
-	{ label: __("Marley"), value: "marley" },
-	{ label: __("Milo"), value: "milo" },
-	{ label: __("Ming"), value: "ming" },
-	{ label: __("Moses"), value: "moses" },
-	{ label: __("Oscar"), value: "oscar" },
-	{ label: __("Ruby"), value: "ruby" },
-	{ label: __("Roxy"), value: "roxy" },
-	{ label: __("Romeo"), value: "romeo" },
-	{ label: __("Sadie"), value: "sadie" },
-	{ label: __("Selena"), value: "selena" },
-	{ label: __("Sarah"), value: "sarah" },
+	{ label: __("Apollo", "interactive-promo"), value: "apollo" },
+	{ label: __("Bubba", "interactive-promo"), value: "bubba" },
+	{ label: __("Chico", "interactive-promo"), value: "chico" },
+	{ label: __("Dexter", "interactive-promo"), value: "dexter" },
+	{ label: __("Duke", "interactive-promo"), value: "duke" },
+	{ label: __("Goliath", "interactive-promo"), value: "goliath" },
+	{ label: __("Jazz", "interactive-promo"), value: "jazz" },
+	{ label: __("Julia", "interactive-promo"), value: "julia" },
+	{ label: __("Layla", "interactive-promo"), value: "layla" },
+	{ label: __("Lexi", "interactive-promo"), value: "lexi" },
+	{ label: __("Lily", "interactive-promo"), value: "lily" },
+	{ label: __("Marley", "interactive-promo"), value: "marley" },
+	{ label: __("Milo", "interactive-promo"), value: "milo" },
+	{ label: __("Ming", "interactive-promo"), value: "ming" },
+	{ label: __("Moses", "interactive-promo"), value: "moses" },
+	{ label: __("Oscar", "interactive-promo"), value: "oscar" },
+	{ label: __("Ruby", "interactive-promo"), value: "ruby" },
+	{ label: __("Roxy", "interactive-promo"), value: "roxy" },
+	{ label: __("Romeo", "interactive-promo"), value: "romeo" },
+	{ label: __("Sadie", "interactive-promo"), value: "sadie" },
+	{ label: __("Selena", "interactive-promo"), value: "selena" },
+	{ label: __("Sarah", "interactive-promo"), value: "sarah" },
 ];
 
 export const WRAPPER_UNITS = [

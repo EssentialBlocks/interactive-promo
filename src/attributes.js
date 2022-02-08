@@ -7,12 +7,19 @@ import {
 } from "./constants";
 import * as typoPrefixs from "./constants/typographyPrefixConstants";
 
-import {
+// import {
+// 	generateResponsiveRangeAttributes,
+// 	generateTypographyAttributes,
+// 	generateBorderShadowAttributes,
+// 	generateDimensionsAttributes,
+// } from "../../../util/helpers";
+
+const {
 	generateResponsiveRangeAttributes,
 	generateTypographyAttributes,
 	generateBorderShadowAttributes,
 	generateDimensionsAttributes,
-} from "../util/helpers";
+} = window.EBInteractivePromoControls;
 
 const attributes = {
 	// the following 4 attributes is must required for responsive options and asset generation for frontend

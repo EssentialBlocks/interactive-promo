@@ -1,9 +1,10 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-const { InspectorControls, MediaUpload } = wp.blockEditor;
-const {
+import { __ } from "@wordpress/i18n";
+import { useEffect } from "@wordpress/element";
+import { InspectorControls, MediaUpload } from "@wordpress/block-editor";
+import {
 	PanelBody,
 	Button,
 	ButtonGroup,
@@ -12,10 +13,9 @@ const {
 	TextareaControl,
 	ToggleControl,
 	SelectControl,
-	TabPanel,
-} = wp.components;
-const { useEffect } = wp.element;
-const { select } = wp.data;
+	TabPanel
+} from "@wordpress/components";
+import { select } from "@wordpress/data";
 
 /**
  * Internal dependencies
@@ -23,8 +23,6 @@ const { select } = wp.data;
 import {
 	ALIGNMENT,
 	EFFECTS_LIST,
-	IMAGE_HEIGHT,
-	IMAGE_WIDTH,
 	imageHeight,
 	imageWidth,
 	wrapperMargin,
@@ -35,18 +33,40 @@ import {
 	typoPrefix_header,
 	typoPrefix_content,
 } from "./constants/typographyPrefixConstants";
-import ImageAvatar from "../util/image-avatar";
+
 import objAttributes from "./attributes";
-import ColorControl from "../util/color-control";
-import ResponsiveRangeController from "../util/responsive-range-control";
-import TypographyDropdown from "../util/typography-control-v2";
-import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
-import BorderShadowControl from "../util/border-shadow-control";
-import GradientColorControl from "../util/gradient-color-controller";
-import {
-	mimmikCssForResBtns,
-	mimmikCssOnPreviewBtnClickWhileBlockSelected,
-} from "../util/helpers";
+
+// import ImageAvatar from "../../../util/image-avatar";
+// import ColorControl from "../../../util/color-control";
+// import ResponsiveRangeController from "../../../util/responsive-range-control";
+// import TypographyDropdown from "../../../util/typography-control-v2";
+// import ResponsiveDimensionsControl from "../../../util/dimensions-control-v2";
+// import BorderShadowControl from "../../../util/border-shadow-control";
+// import GradientColorControl from "../../../util/gradient-color-controller";
+// import {
+// 	mimmikCssForResBtns,
+// 	mimmikCssOnPreviewBtnClickWhileBlockSelected,
+// } from "../../../util/helpers";
+
+const {
+	// mimmikCssForResBtns,
+	// mimmikCssOnPreviewBtnClickWhileBlockSelected,
+
+	// 
+	ImageAvatar,
+	// objAttributes,
+	ColorControl,
+	ResponsiveRangeController,
+	TypographyDropdown,
+	ResponsiveDimensionsControl,
+	BorderShadowControl,
+	GradientColorControl,
+} = window.EBInteractivePromoControls;
+
+const editorStoreForGettingPreivew =
+	eb_style_handler.editor_type === "edit-site"
+		? "core/edit-site"
+		: "core/edit-post";
 
 const Inspector = ({ attributes, setAttributes }) => {
 	const {
@@ -68,29 +88,29 @@ const Inspector = ({ attributes, setAttributes }) => {
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
 	useEffect(() => {
 		setAttributes({
-			resOption: select("core/edit-post").__experimentalGetPreviewDeviceType(),
+			resOption: select(editorStoreForGettingPreivew).__experimentalGetPreviewDeviceType(),
 		});
 	}, []);
 
-	// this useEffect is for mimmiking css for all the eb blocks on resOption changing
-	useEffect(() => {
-		mimmikCssForResBtns({
-			domObj: document,
-			resOption,
-		});
-	}, [resOption]);
+	// // this useEffect is for mimmiking css for all the eb blocks on resOption changing
+	// useEffect(() => {
+	// 	mimmikCssForResBtns({
+	// 		domObj: document,
+	// 		resOption,
+	// 	});
+	// }, [resOption]);
 
-	// this useEffect is to mimmik css for responsive preview in the editor page when clicking the buttons in the 'Preview button of wordpress' located beside the 'update' button while any block is selected and it's inspector panel is mounted in the DOM
-	useEffect(() => {
-		const cleanUp = mimmikCssOnPreviewBtnClickWhileBlockSelected({
-			domObj: document,
-			select,
-			setAttributes,
-		});
-		return () => {
-			cleanUp();
-		};
-	}, []);
+	// // this useEffect is to mimmik css for responsive preview in the editor page when clicking the buttons in the 'Preview button of wordpress' located beside the 'update' button while any block is selected and it's inspector panel is mounted in the DOM
+	// useEffect(() => {
+	// 	const cleanUp = mimmikCssOnPreviewBtnClickWhileBlockSelected({
+	// 		domObj: document,
+	// 		select,
+	// 		setAttributes,
+	// 	});
+	// 	return () => {
+	// 		cleanUp();
+	// 	};
+	// }, []);
 
 	const resRequiredProps = {
 		setAttributes,
@@ -108,17 +128,17 @@ const Inspector = ({ attributes, setAttributes }) => {
 					tabs={[
 						{
 							name: "general",
-							title: "General",
+							title: __("General", "interactive-promo"),
 							className: "eb-tab general",
 						},
 						{
 							name: "styles",
-							title: "Styles",
+							title: __("Style", "interactive-promo"),
 							className: "eb-tab styles",
 						},
 						{
 							name: "advance",
-							title: "Advance",
+							title: __("Advanced", "interactive-promo"),
 							className: "eb-tab advance",
 						},
 					]}
@@ -128,9 +148,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 							{tab.name === "general" && (
 								<>
 									<PanelBody>
-										<BaseControl
-											label={__("Background Image", "interactive-promo")}
-										>
+										<BaseControl label={__("Background Image", "interactive-promo")}>
 											<MediaUpload
 												onSelect={(media) =>
 													setAttributes({
@@ -211,7 +229,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											<ButtonGroup>
 												{ALIGNMENT.map((item) => (
 													<Button
-														isLarge
+														// isLarge
 														isPrimary={imageAlignment === item.value}
 														isSecondary={imageAlignment !== item.value}
 														onClick={() =>

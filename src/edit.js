@@ -1,21 +1,26 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-const {
+import { __ } from "@wordpress/i18n";
+import { useEffect } from "@wordpress/element";
+import {
 	useBlockProps,
 	BlockControls,
 	MediaPlaceholder,
 	MediaUpload,
-} = wp.blockEditor;
-const { Toolbar, ToolbarButton, ToolbarGroup, Button } = wp.components;
-const { useEffect } = wp.element;
-const { select } = wp.data;
+} from "@wordpress/block-editor";
+import { Toolbar, ToolbarButton } from "@wordpress/components";
+import { select } from "@wordpress/data";
+
+/**
+ * External depencencies
+ */
 
 /**
  * Internal dependencies
  */
-import "./editor.scss";
+import classnames from "classnames";
+
 import Inspector from "./inspector";
 import {
 	wrapperMargin,
@@ -28,19 +33,34 @@ import {
 	typoPrefix_header,
 	typoPrefix_content,
 } from "./constants/typographyPrefixConstants";
-import {
+
+// import {
+// 	softMinifyCssStrings,
+// 	mimmikCssForPreviewBtnClick,
+// 	duplicateBlockIdFix,
+// 	generateDimensionsControlStyles,
+// 	generateBorderShadowStyles,
+// 	generateTypographyStyles,
+// 	generateResponsiveRangeStyles,
+// } from "../../../util/helpers";
+
+const {
 	softMinifyCssStrings,
-	isCssExists,
-	mimmikCssForPreviewBtnClick,
+	// mimmikCssForPreviewBtnClick,
 	duplicateBlockIdFix,
 	generateDimensionsControlStyles,
 	generateBorderShadowStyles,
 	generateTypographyStyles,
 	generateResponsiveRangeStyles,
-} from "../util/helpers";
+} = window.EBInteractivePromoControls;
+
+const editorStoreForGettingPreivew =
+	eb_style_handler.editor_type === "edit-site"
+		? "core/edit-site"
+		: "core/edit-post";
 
 const Edit = (props) => {
-	const { isSelected, attributes, setAttributes, clientId } = props;
+	const { isSelected, attributes, setAttributes, className, clientId } = props;
 	const {
 		blockMeta,
 		blockId,
@@ -205,6 +225,7 @@ const Edit = (props) => {
 
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure img {
 			min-width: 100%;
+			object-fit: cover;
 		}
 	`;
 	const tabStyles = `
@@ -259,17 +280,17 @@ const Edit = (props) => {
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
-		${isCssExists(desktopStyles) ? desktopStyles : " "}
+		${desktopStyles}
 	`);
 
 	// all css styles for Tab in strings ⬇
 	const tabAllStyles = softMinifyCssStrings(`
-		${isCssExists(tabStyles) ? tabStyles : " "}
+		${tabStyles}
 	`);
 
 	// all css styles for Mobile in strings ⬇
 	const mobileAllStyles = softMinifyCssStrings(`
-		${isCssExists(mobileStyles) ? mobileStyles : " "}
+		${mobileStyles}
 	`);
 
 	// Set All Style in "blockMeta" Attribute
@@ -287,7 +308,9 @@ const Edit = (props) => {
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
 	useEffect(() => {
 		setAttributes({
-			resOption: select("core/edit-post").__experimentalGetPreviewDeviceType(),
+			resOption: select(
+				editorStoreForGettingPreivew
+			).__experimentalGetPreviewDeviceType(),
 		});
 	}, []);
 	// this useEffect is for creating an unique id for each block's unique className by a random unique number
@@ -302,98 +325,100 @@ const Edit = (props) => {
 		});
 	}, []);
 
-	// this useEffect is for mimmiking css when responsive options clicked from wordpress's 'preview' button
-	useEffect(() => {
-		mimmikCssForPreviewBtnClick({
-			domObj: document,
-			select,
-		});
-	}, []);
+	// // this useEffect is for mimmiking css when responsive options clicked from wordpress's 'preview' button
+	// useEffect(() => {
+	// 	mimmikCssForPreviewBtnClick({
+	// 		domObj: document,
+	// 		select,
+	// 	});
+	// }, []);
 
 	const blockProps = useBlockProps({
-		className: `eb-guten-block-main-parent-wrapper`,
+		className: classnames(className, `eb-guten-block-main-parent-wrapper`),
 	});
 
-	return [
-		isSelected && (
-			<Inspector attributes={attributes} setAttributes={setAttributes} />
-		),
-		<BlockControls>
-			<Toolbar label={__("Options", "interactive-promo")}>
-				<MediaUpload
-					onSelect={(media) =>
-						setAttributes({
-							imageURL: media.url,
-							imageID: media.id,
-						})
-					}
-					allowedTypes={["image"]}
-					value={imageID}
-					render={({ open }) => (
-						<ToolbarButton
-							className="components-toolbar__control"
-							label={__("Edit Image", "interactive-promo")}
-							icon="edit"
-							onClick={open}
-						/>
-					)}
-				/>
-			</Toolbar>
-		</BlockControls>,
-		<div {...blockProps}>
-			<style>
-				{`
-				 ${desktopAllStyles}
- 
-				 /* mimmikcssStart */
- 
-				 ${resOption === "Tablet" ? tabAllStyles : " "}
-				 ${resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " "}
- 
-				 /* mimmikcssEnd */
- 
-				 @media all and (max-width: 1024px) {	
- 
-					 /* tabcssStart */			
-					 ${softMinifyCssStrings(tabAllStyles)}
-					 /* tabcssEnd */			
+	return (
+		<>
+			{isSelected && (
+				<Inspector attributes={attributes} setAttributes={setAttributes} />
+			)}
+			<BlockControls>
+				<Toolbar label={__("Options", "interactive-promo")}>
+					<MediaUpload
+						onSelect={(media) =>
+							setAttributes({
+								imageURL: media.url,
+								imageID: media.id,
+							})
+						}
+						allowedTypes={["image"]}
+						value={imageID}
+						render={({ open }) => (
+							<ToolbarButton
+								className="components-toolbar__control"
+								label={__("Edit Image", "interactive-promo")}
+								icon="edit"
+								onClick={open}
+							/>
+						)}
+					/>
+				</Toolbar>
+			</BlockControls>
+			<div {...blockProps}>
+				<style>
+					{`
+			 ${desktopAllStyles}
+
+			 /* mimmikcssStart */
+
+			 ${resOption === "Tablet" ? tabAllStyles : " "}
+			 ${resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " "}
+
+			 /* mimmikcssEnd */
+
+			 @media all and (max-width: 1024px) {	
+
+				 /* tabcssStart */			
+				 ${softMinifyCssStrings(tabAllStyles)}
+				 /* tabcssEnd */			
+			 
+			 }
+			 
+			 @media all and (max-width: 767px) {
 				 
-				 }
-				 
-				 @media all and (max-width: 767px) {
-					 
-					 /* mobcssStart */			
-					 ${softMinifyCssStrings(mobileAllStyles)}
-					 /* mobcssEnd */			
-				 
-				 }
-				 `}
-			</style>
-			<div className={`eb-interactive-promo-wrapper ${blockId}`}>
-				<div
-					className="eb-interactive-promo-container"
-					data-effect={effectName}
-				>
-					<div className="eb-interactive-promo hover-effect">
-						<figure className={`effect-${effectName}`}>
-							<img src={imageURL} alt={imageAltTag} />
-							<figcaption>
-								<h2 className="eb-interactive-promo-header">{header}</h2>
-								<p className="eb-interactive-promo-content">{content}</p>
-								{link && (
-									<a
-										href={link}
-										target={newWindow ? "_blank" : "_self"}
-										rel="noopener noreferrer"
-									/>
-								)}
-							</figcaption>
-						</figure>
+				 /* mobcssStart */			
+				 ${softMinifyCssStrings(mobileAllStyles)}
+				 /* mobcssEnd */			
+			 
+			 }
+			 `}
+				</style>
+				<div className={`eb-interactive-promo-wrapper ${blockId}`}>
+					<div
+						className="eb-interactive-promo-container"
+						data-effect={effectName}
+					>
+						<div className="eb-interactive-promo hover-effect">
+							<figure className={`effect-${effectName}`}>
+								<img src={imageURL} alt={imageAltTag} />
+								<figcaption>
+									<h2 className="eb-interactive-promo-header">{header}</h2>
+									<p className="eb-interactive-promo-content">{content}</p>
+									{link && (
+										<a
+											href={link}
+											target={newWindow ? "_blank" : "_self"}
+											rel="noopener noreferrer"
+										/>
+									)}
+								</figcaption>
+							</figure>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>,
-	];
+		</>
+	);
 };
 
 export default Edit;

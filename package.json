@@ -4,7 +4,7 @@
 	"description": "Engage your potential audience with exciting promo",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
-	"main": "build/index.js",
+	"main": "Gruntfile.js",
 	"scripts": {
 		"build": "wp-scripts build",
 		"format:js": "wp-scripts format-js",
@@ -13,8 +13,11 @@
 		"start": "wp-scripts start",
 		"packages-update": "wp-scripts packages-update"
 	},
+	"dependencies": {
+		"classnames": "^2.3.1"
+	},
 	"devDependencies": {
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
-		"@wordpress/scripts": "^12.1.1"
+		"@wordpress/scripts": "^20.0.2"
 	}
 }

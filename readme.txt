@@ -81,7 +81,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.1.1 - 19/08/2021 =
+= 1.1.1 - 23/08/2021 =
 * Improved: Security for asset generation
 * Fixed: Deprecated warning
 
@@ -101,4 +101,4 @@ Yes, it will work with any standard WordPress theme.
 
 == Upgrade Notice ==
 
-[Major Update] Improved controls and performance
+[Minor Update] Bugfix and stability

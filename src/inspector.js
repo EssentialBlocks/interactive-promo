@@ -36,35 +36,19 @@ import {
 
 import objAttributes from "./attributes";
 
-// import ImageAvatar from "../../../util/image-avatar";
-// import ColorControl from "../../../util/color-control";
-// import ResponsiveRangeController from "../../../util/responsive-range-control";
-// import TypographyDropdown from "../../../util/typography-control-v2";
-// import ResponsiveDimensionsControl from "../../../util/dimensions-control-v2";
-// import BorderShadowControl from "../../../util/border-shadow-control";
-// import GradientColorControl from "../../../util/gradient-color-controller";
-// import {
-// 	mimmikCssForResBtns,
-// 	mimmikCssOnPreviewBtnClickWhileBlockSelected,
-// } from "../../../util/helpers";
-
 const {
-	// mimmikCssForResBtns,
-	// mimmikCssOnPreviewBtnClickWhileBlockSelected,
-
-	// 
 	ImageAvatar,
-	// objAttributes,
 	ColorControl,
 	ResponsiveRangeController,
 	TypographyDropdown,
 	ResponsiveDimensionsControl,
 	BorderShadowControl,
 	GradientColorControl,
+	AdvancedControls,
 } = window.EBInteractivePromoControls;
 
 const editorStoreForGettingPreivew =
-	eb_style_handler.editor_type === "edit-site"
+	eb_conditional_localize.editor_type === "edit-site"
 		? "core/edit-site"
 		: "core/edit-post";
 
@@ -128,17 +112,17 @@ const Inspector = ({ attributes, setAttributes }) => {
 					tabs={[
 						{
 							name: "general",
-							title: __("General", "interactive-promo"),
+							title: __("General", "essential-blocks"),
 							className: "eb-tab general",
 						},
 						{
 							name: "styles",
-							title: __("Style", "interactive-promo"),
+							title: __("Style", "essential-blocks"),
 							className: "eb-tab styles",
 						},
 						{
 							name: "advance",
-							title: __("Advanced", "interactive-promo"),
+							title: __("Advanced", "essential-blocks"),
 							className: "eb-tab advance",
 						},
 					]}
@@ -148,7 +132,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 							{tab.name === "general" && (
 								<>
 									<PanelBody>
-										<BaseControl label={__("Background Image", "interactive-promo")}>
+										<BaseControl label={__("Background Image", "essential-blocks")}>
 											<MediaUpload
 												onSelect={(media) =>
 													setAttributes({
@@ -161,7 +145,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 													!imageURL && (
 														<Button
 															className="eb-cia-upload-button"
-															label={__("Upload Image", "interactive-promo")}
+															label={__("Upload Image", "essential-blocks")}
 															icon="format-image"
 															onClick={open}
 														/>
@@ -178,7 +162,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											)}
 										</BaseControl>
 										<ResponsiveRangeController
-											baseLabel={__("Height", "interactive-promo")}
+											baseLabel={__("Height", "essential-blocks")}
 											controlName={imageHeight}
 											resRequiredProps={resRequiredProps}
 											min={200}
@@ -187,7 +171,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											noUnits
 										/>
 										<ResponsiveRangeController
-											baseLabel={__("Width", "interactive-promo")}
+											baseLabel={__("Width", "essential-blocks")}
 											controlName={imageWidth}
 											resRequiredProps={resRequiredProps}
 											min={0}
@@ -196,40 +180,40 @@ const Inspector = ({ attributes, setAttributes }) => {
 											noUnits
 										/>
 										<TextControl
-											label={__("Image alt tag", "interactive-promo")}
+											label={__("Image alt tag", "essential-blocks")}
 											value={imageAltTag}
 											onChange={(newValue) =>
 												setAttributes({ imageAltTag: newValue })
 											}
 										/>
 										<TextControl
-											label={__("Header", "interactive-promo")}
+											label={__("Header", "essential-blocks")}
 											value={header}
 											onChange={(header) => setAttributes({ header })}
 										/>
 										<TextareaControl
-											label={__("Content", "interactive-promo")}
+											label={__("Content", "essential-blocks")}
 											value={content}
 											onChange={(content) => setAttributes({ content })}
 										/>
 										<TextControl
-											label={__("Link", "interactive-promo")}
+											label={__("Link", "essential-blocks")}
 											value={link}
 											onChange={(link) => setAttributes({ link })}
 										/>
 										<ToggleControl
-											label={__("Open in new window", "interactive-promo")}
+											label={__("Open in new window", "essential-blocks")}
 											checked={newWindow}
 											onChange={() => setAttributes({ newWindow: !newWindow })}
 										/>
 										<BaseControl>
 											<h3 className="eb-control-title">
-												{__("Alignment", "interactive-promo")}
+												{__("Alignment", "essential-blocks")}
 											</h3>
 											<ButtonGroup>
-												{ALIGNMENT.map((item) => (
+												{ALIGNMENT.map((item, index) => (
 													<Button
-														// isLarge
+														key={index}
 														isPrimary={imageAlignment === item.value}
 														isSecondary={imageAlignment !== item.value}
 														onClick={() =>
@@ -244,7 +228,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											</ButtonGroup>
 										</BaseControl>
 										<SelectControl
-											label={__("Promo Effect", "interactive-promo")}
+											label={__("Promo Effect", "essential-blocks")}
 											value={effectName}
 											options={EFFECTS_LIST}
 											onChange={(newEffect) =>
@@ -259,11 +243,11 @@ const Inspector = ({ attributes, setAttributes }) => {
 									<PanelBody>
 										<BaseControl>
 											<h3 className="eb-control-title">
-												{__("Background Color", "interactive-promo")}
+												{__("Background Color", "essential-blocks")}
 											</h3>
 										</BaseControl>
 										<ToggleControl
-											label={__("Show Gradient Color", "interactive-promo")}
+											label={__("Show Gradient Color", "essential-blocks")}
 											checked={isBackgroundGradient}
 											onChange={() => {
 												setAttributes({
@@ -273,7 +257,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										/>
 										{isBackgroundGradient || (
 											<ColorControl
-												label={__("Color", "interactive-promo")}
+												label={__("Color", "essential-blocks")}
 												color={backgroundColor}
 												onChange={(backgroundColor) =>
 													setAttributes({ backgroundColor })
@@ -283,7 +267,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										{isBackgroundGradient && (
 											<>
 												<GradientColorControl
-													label={__("Gradient Color", "interactive-promo")}
+													label={__("Gradient Color", "essential-blocks")}
 													gradientColor={backgroundGradient}
 													onChange={(backgroundGradient) =>
 														setAttributes({ backgroundGradient })
@@ -293,17 +277,17 @@ const Inspector = ({ attributes, setAttributes }) => {
 										)}
 									</PanelBody>
 									<PanelBody
-										title={__("Header", "interactive-promo")}
+										title={__("Header", "essential-blocks")}
 										initialOpen={false}
 									>
 										<>
 											<TypographyDropdown
-												baseLabel={__("Typography", "interactive-promo")}
+												baseLabel={__("Typography", "essential-blocks")}
 												typographyPrefixConstant={typoPrefix_header}
 												resRequiredProps={resRequiredProps}
 											/>
 											<ColorControl
-												label={__("Color", "interactive-promo")}
+												label={__("Color", "essential-blocks")}
 												color={headerColor}
 												onChange={(headerColor) =>
 													setAttributes({ headerColor })
@@ -312,17 +296,17 @@ const Inspector = ({ attributes, setAttributes }) => {
 										</>
 									</PanelBody>
 									<PanelBody
-										title={__("Content", "interactive-promo")}
+										title={__("Content", "essential-blocks")}
 										initialOpen={false}
 									>
 										<>
 											<TypographyDropdown
-												baseLabel={__("Typography", "interactive-promo")}
+												baseLabel={__("Typography", "essential-blocks")}
 												typographyPrefixConstant={typoPrefix_content}
 												resRequiredProps={resRequiredProps}
 											/>
 											<ColorControl
-												label={__("Color", "interactive-promo")}
+												label={__("Color", "essential-blocks")}
 												color={contentColor}
 												onChange={(contentColor) =>
 													setAttributes({ contentColor })
@@ -338,16 +322,16 @@ const Inspector = ({ attributes, setAttributes }) => {
 										<ResponsiveDimensionsControl
 											resRequiredProps={resRequiredProps}
 											controlName={wrapperMargin}
-											baseLabel={__("Margin", "interactive-promo")}
+											baseLabel={__("Margin", "essential-blocks")}
 										/>
 										<ResponsiveDimensionsControl
 											resRequiredProps={resRequiredProps}
 											controlName={wrapperPadding}
-											baseLabel={__("Padding", "interactive-promo")}
+											baseLabel={__("Padding", "essential-blocks")}
 										/>
 									</PanelBody>
 									<PanelBody
-										title={__("Border & Shadow", "interactive-promo")}
+										title={__("Border & Shadow", "essential-blocks")}
 										initialOpen={false}
 									>
 										<BorderShadowControl
@@ -355,6 +339,8 @@ const Inspector = ({ attributes, setAttributes }) => {
 											resRequiredProps={resRequiredProps}
 										/>
 									</PanelBody>
+
+									<AdvancedControls attributes={attributes} setAttributes={setAttributes} />
 								</>
 							)}
 						</div>

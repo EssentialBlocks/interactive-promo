@@ -2,8 +2,8 @@
 Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir
 Tags: block, blocks, promo, card, cta, interactive, animated, image block, gutenberg, gutenberg blocks
 Requires at least: 5.6
-Tested up to: 5.9
-Stable tag: 1.2.0
+Tested up to: 6.0
+Stable tag: 1.2.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -80,6 +80,11 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.2.1 - dev =
+* Added: Animation, Custom Css and responsive options
+* Improved: Controls & structure
+* Fixed: Fixed editor page hover effect css issue
 
 = 1.2.0 - 09/02/2022 =
 * Added: Block Base theme support

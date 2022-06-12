@@ -177,13 +177,18 @@ const Edit = (props) => {
 			: "margin: 0 auto;";
 
 	const desktopStyles = `
-		 .eb-interactive-promo-wrapper figure > figcaption {
+		 .eb-interactive-promo-wrapper * {
 			 box-sizing: border-box;
+		 }
+
+		 .eb-interactive-promo-wrapper  .eb-interactive-promo-header {
+			 text-transform: none;
 		 }
 		 
 		 .eb-interactive-promo-wrapper.${blockId} {
 			 ${wrapperMarginStylesDesktop}
 			 ${wrapperPaddingStylesDesktop}
+			 ${imageBdShadowStyesDesktop}
 		 }
  
 		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
@@ -203,7 +208,6 @@ const Edit = (props) => {
 						? imageWidthDesktop
 						: "max-width: 100%;"
 				}
-			 ${imageBdShadowStyesDesktop}
 			 ${imageAlign}
 			 ${
 					isBackgroundGradient
@@ -231,6 +235,7 @@ const Edit = (props) => {
 		 .eb-interactive-promo-wrapper.${blockId} {
 			 ${wrapperMarginStylesTab}
 			 ${wrapperPaddingStylesTab}
+			 ${imageBdShadowStyesTab}
 		 }
  
 		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
@@ -244,7 +249,6 @@ const Edit = (props) => {
 		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
 			 ${imageHeightTab.replace(/\D/g, "") ? imageHeightTab : "height: 100%;"}
 			 ${imageWidthTab.replace(/\D/g, "") ? imageWidthTab : "max-width: 100%;"}
-			 ${imageBdShadowStyesTab}
 		 }
  
 		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
@@ -256,6 +260,7 @@ const Edit = (props) => {
 		 .eb-interactive-promo-wrapper.${blockId} {
 			 ${wrapperMarginStylesMobile}
 			 ${wrapperPaddingStylesMobile}
+			 ${imageBdShadowStyesMobile}
 		 }
 		 
 		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
@@ -269,7 +274,6 @@ const Edit = (props) => {
 		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
 			 ${imageHeightMobile.replace(/\D/g, "") ? imageHeightMobile : "height: 100%;"}
 			 ${imageWidthMobile.replace(/\D/g, "") ? imageWidthMobile : "max-width: 100%;"}
-			 ${imageBdShadowStyesMobile}
 		 }
  
 		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {

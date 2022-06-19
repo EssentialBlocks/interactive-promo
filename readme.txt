@@ -85,6 +85,7 @@ Yes, it will work with any standard WordPress theme.
 * Added: Animation, Custom Css and responsive options
 * Improved: Controls & structure
 * Fixed: Fixed editor page hover effect css issue
+* Improved: Converted style-handler to php for working perfectly with Reusable blocks and FSE
 
 = 1.2.0 - 09/02/2022 =
 * Added: Block Base theme support

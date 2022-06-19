@@ -52,7 +52,7 @@ class Interactive_Promo_Helper
             wp_register_script(
                 "interactive-promo-blocks-controls-util",
                 INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . '/dist/controls.js',
-                array_merge($controls_dependencies['dependencies'], array("essential-blocks-edit-post")),
+                array_merge($controls_dependencies['dependencies']),
                 $controls_dependencies['version'],
                 true
             );

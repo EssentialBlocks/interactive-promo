@@ -1,21 +1,32 @@
-const { registerBlockType } = wp.blocks;
-const { __ } = wp.i18n;
+/**
+ * WordPress dependeincies
+ */
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
 
+/**
+ * Internal dependencies
+ */
+import { InteractivePromoIcon } from "./icon";
 import Edit from "./edit";
-import save from "./save";
-import icon from "./icon";
+import Save from "./save";
+import example from "./example";
 import attributes from "./attributes";
+import deprecated from "./deprecated";
+import metadata from "../block.json";
+const { ebConditionalRegisterBlockType } = EBInteractivePromoControls;
 
-registerBlockType("interactive-promo/interactive-promo", {
-	title: __("Interactive Promo", "interactive-promo"),
-	description: __(
-		"Engage your potential audience with exciting promo",
-		"interactive-promo"
-	),
-	keywords: [__("promo", __("interactive"), __("essential"))],
-	category: "widgets",
-	icon,
+ebConditionalRegisterBlockType(metadata, {
+	icon: InteractivePromoIcon,
 	attributes,
+	keywords: [
+		__("promo", "essential-blocks"),
+		__("message", "essential-blocks"),
+		__("eb essential", "essential-blocks"),
+		__("interactive", "essential-blocks"),
+	],
 	edit: Edit,
-	save,
+	save: Save,
+	example,
+	deprecated,
 });

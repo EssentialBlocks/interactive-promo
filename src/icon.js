@@ -1,4 +1,4 @@
-export default function () {
+export const InteractivePromoIcon = () => {
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" id="eb-promo" viewBox="0 0 64 64">
 			<linearGradient
@@ -119,4 +119,4 @@ export default function () {
 			<rect x="12" y="28" width="8" height="2" fill="url(#SVGID_8__43971)" />
 		</svg>
 	);
-}
+};

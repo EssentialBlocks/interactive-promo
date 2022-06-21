@@ -1,29 +1,29 @@
-const { __ } = wp.i18n;
-const { Dashicon } = wp.components;
+import { __ } from "@wordpress/i18n";
+import { Dashicon } from "@wordpress/components";
 
 export const EFFECTS_LIST = [
-	{ label: __("Apollo"), value: "apollo" },
-	{ label: __("Bubba"), value: "bubba" },
-	{ label: __("Chico"), value: "chico" },
-	{ label: __("Dexter"), value: "dexter" },
-	{ label: __("Duke"), value: "duke" },
-	{ label: __("Goliath"), value: "goliath" },
-	{ label: __("Jazz"), value: "jazz" },
-	{ label: __("Julia"), value: "julia" },
-	{ label: __("Layla"), value: "layla" },
-	{ label: __("Lexi"), value: "lexi" },
-	{ label: __("Lily"), value: "lily" },
-	{ label: __("Marley"), value: "marley" },
-	{ label: __("Milo"), value: "milo" },
-	{ label: __("Ming"), value: "ming" },
-	{ label: __("Moses"), value: "moses" },
-	{ label: __("Oscar"), value: "oscar" },
-	{ label: __("Ruby"), value: "ruby" },
-	{ label: __("Roxy"), value: "roxy" },
-	{ label: __("Romeo"), value: "romeo" },
-	{ label: __("Sadie"), value: "sadie" },
-	{ label: __("Selena"), value: "selena" },
-	{ label: __("Sarah"), value: "sarah" },
+	{ label: __("Apollo", "essential-blocks"), value: "apollo" },
+	{ label: __("Bubba", "essential-blocks"), value: "bubba" },
+	{ label: __("Chico", "essential-blocks"), value: "chico" },
+	{ label: __("Dexter", "essential-blocks"), value: "dexter" },
+	{ label: __("Duke", "essential-blocks"), value: "duke" },
+	{ label: __("Goliath", "essential-blocks"), value: "goliath" },
+	{ label: __("Jazz", "essential-blocks"), value: "jazz" },
+	{ label: __("Julia", "essential-blocks"), value: "julia" },
+	{ label: __("Layla", "essential-blocks"), value: "layla" },
+	{ label: __("Lexi", "essential-blocks"), value: "lexi" },
+	{ label: __("Lily", "essential-blocks"), value: "lily" },
+	{ label: __("Marley", "essential-blocks"), value: "marley" },
+	{ label: __("Milo", "essential-blocks"), value: "milo" },
+	{ label: __("Ming", "essential-blocks"), value: "ming" },
+	{ label: __("Moses", "essential-blocks"), value: "moses" },
+	{ label: __("Oscar", "essential-blocks"), value: "oscar" },
+	{ label: __("Ruby", "essential-blocks"), value: "ruby" },
+	{ label: __("Roxy", "essential-blocks"), value: "roxy" },
+	{ label: __("Romeo", "essential-blocks"), value: "romeo" },
+	{ label: __("Sadie", "essential-blocks"), value: "sadie" },
+	{ label: __("Selena", "essential-blocks"), value: "selena" },
+	{ label: __("Sarah", "essential-blocks"), value: "sarah" },
 ];
 
 export const WRAPPER_UNITS = [

@@ -1,9 +1,9 @@
 === Interactive Promo ===
 Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir
 Tags: block, blocks, promo, card, cta, interactive, animated, image block, gutenberg, gutenberg blocks
-Requires at least: 5.5
-Tested up to: 5.8
-Stable tag: 1.1.1
+Requires at least: 5.6
+Tested up to: 6.0
+Stable tag: 1.2.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -81,6 +81,17 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
+= 1.2.1 - 21/06/2022 =
+* Added: Animation, Custom Css and responsive options
+* Improved: Controls & structure
+* Fixed: Fixed editor page hover effect css issue
+* Improved: Converted style-handler to php for working perfectly with Reusable blocks and FSE
+
+= 1.2.0 - 09/02/2022 =
+* Added: Block Base theme support
+* Improved: Font Library Updated
+* Improved: Controls and structure
+
 = 1.1.1 - 23/08/2021 =
 * Improved: Security for asset generation
 * Fixed: Deprecated warning
@@ -101,4 +112,4 @@ Yes, it will work with any standard WordPress theme.
 
 == Upgrade Notice ==
 
-[Major Update] Improved controls and performance
+[Minor Update] Bugfix and stability

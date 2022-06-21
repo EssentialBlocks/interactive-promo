@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Plugin Name:     Interactive Promo
  * Plugin URI:      https://essential-blocks.com
  * Description:     Engage your potential audience with an exciting promo.
- * Version:         1.1.1
+ * Version:         1.2.1
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -24,37 +25,55 @@ define('INTERACTIVE_PROMO_DIR', dirname(__FILE__));
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
 require_once __DIR__ . '/includes/admin-enqueue.php';
+require_once __DIR__ . '/includes/helpers.php';
 require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_interactive_promo_block_init()
 {
-	$dir = dirname(__FILE__);
+	define('INTERACTIVE_PROMO_BLOCKS_VERSION', "1.2.1");
+	define('INTERACTIVE_PROMO_BLOCKS_ADMIN_URL', plugin_dir_url(__FILE__));
+	define('INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH', dirname(__FILE__));
 
-	$script_asset_path = "$dir/build/index.asset.php";
+
+	$script_asset_path = INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH . "/dist/index.asset.php";
 	if (!file_exists($script_asset_path)) {
 		throw new Error(
-			'You need to run `npm start` or `npm run build` for the "block/interactive-promo" block first.'
+			'You need to run `npm start` or `npm run build` for the "interactive-promo/interactive-promo" block first.'
 		);
 	}
-	$index_js = 'build/index.js';
+	$index_js = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'dist/index.js';
+	$script_asset = require($script_asset_path);
+	$all_dependencies = array_merge($script_asset['dependencies'], array(
+		'wp-blocks',
+		'wp-i18n',
+		'wp-element',
+		'wp-block-editor',
+		'interactive-promo-blocks-controls-util',
+		'essential-blocks-eb-animation'
+	));
+
 	wp_register_script(
-		'create-block-interactive-promo-block-editor',
-		plugins_url($index_js, __FILE__),
-		array(
-			'wp-blocks',
-			'wp-i18n',
-			'wp-element',
-			'wp-block-editor',
-		),
-		filemtime("$dir/$index_js")
+		'interactive-promo-block-editor-js',
+		$index_js,
+		$all_dependencies,
+		$script_asset['version']
 	);
 
-	$editor_css = 'build/index.css';
-	wp_register_style(
-		'create-block-interactive-promo-block-editor',
-		plugins_url($editor_css, __FILE__),
+	$load_animation_js = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'assets/js/eb-animation-load.js';
+	wp_register_script(
+		'essential-blocks-eb-animation',
+		$load_animation_js,
 		array(),
-		filemtime("$dir/$editor_css")
+		INTERACTIVE_PROMO_BLOCKS_VERSION,
+		true
+	);
+
+	$animate_css = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'assets/css/animate.min.css';
+	wp_register_style(
+		'essential-blocks-animation',
+		$animate_css,
+		array(),
+		INTERACTIVE_PROMO_BLOCKS_VERSION
 	);
 
 	$hover_style = 'assets/css/hover-effects.css';
@@ -62,22 +81,26 @@ function create_block_interactive_promo_block_init()
 		'hover-effects-style',
 		plugins_url($hover_style, __FILE__),
 		array(),
-		filemtime("$dir/$hover_style"),
+		filemtime(INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH . "/$hover_style"),
 		'all'
 	);
 
 	if (!WP_Block_Type_Registry::get_instance()->is_registered('essential-blocks/interactive-promo')) {
-		register_block_type('interactive-promo/interactive-promo', array(
-			'editor_script' => 'create-block-interactive-promo-block-editor',
-			'editor_style' => 'create-block-interactive-promo-block-editor',
-			'render_callback' => function ($attributes, $content) {
-				if (!is_admin()) {
-					wp_enqueue_style('hover-effects-style',);
+		register_block_type(
+			Interactive_Promo_Helper::get_block_register_path('interactive-promo/interactive-promo', INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH),
+			array(
+				'editor_script' => 'interactive-promo-block-editor-js',
+				'render_callback' => function ($attributes, $content) {
+					if (!is_admin()) {
+						wp_enqueue_style('hover-effects-style');
+						wp_enqueue_style('essential-blocks-animation');
+						wp_enqueue_script('essential-blocks-eb-animation');
+					}
+					return $content;
 				}
-				return $content;
-			}
-		));
+			)
+		);
 	}
 }
 
-add_action('init', 'create_block_interactive_promo_block_init');
+add_action('init', 'create_block_interactive_promo_block_init', 99);

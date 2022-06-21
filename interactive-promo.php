@@ -4,7 +4,7 @@
  * Plugin Name:     Interactive Promo
  * Plugin URI:      https://essential-blocks.com
  * Description:     Engage your potential audience with an exciting promo.
- * Version:         1.2.0
+ * Version:         1.2.1
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -30,7 +30,7 @@ require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_interactive_promo_block_init()
 {
-	define('INTERACTIVE_PROMO_BLOCKS_VERSION', "1.2.0");
+	define('INTERACTIVE_PROMO_BLOCKS_VERSION', "1.2.1");
 	define('INTERACTIVE_PROMO_BLOCKS_ADMIN_URL', plugin_dir_url(__FILE__));
 	define('INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH', dirname(__FILE__));
 
@@ -48,7 +48,8 @@ function create_block_interactive_promo_block_init()
 		'wp-i18n',
 		'wp-element',
 		'wp-block-editor',
-		'interactive-promo-blocks-controls-util'
+		'interactive-promo-blocks-controls-util',
+		'essential-blocks-eb-animation'
 	));
 
 	wp_register_script(
@@ -56,6 +57,23 @@ function create_block_interactive_promo_block_init()
 		$index_js,
 		$all_dependencies,
 		$script_asset['version']
+	);
+
+	$load_animation_js = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'assets/js/eb-animation-load.js';
+	wp_register_script(
+		'essential-blocks-eb-animation',
+		$load_animation_js,
+		array(),
+		INTERACTIVE_PROMO_BLOCKS_VERSION,
+		true
+	);
+
+	$animate_css = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'assets/css/animate.min.css';
+	wp_register_style(
+		'essential-blocks-animation',
+		$animate_css,
+		array(),
+		INTERACTIVE_PROMO_BLOCKS_VERSION
 	);
 
 	$hover_style = 'assets/css/hover-effects.css';
@@ -74,7 +92,9 @@ function create_block_interactive_promo_block_init()
 				'editor_script' => 'interactive-promo-block-editor-js',
 				'render_callback' => function ($attributes, $content) {
 					if (!is_admin()) {
-						wp_enqueue_style('hover-effects-style',);
+						wp_enqueue_style('hover-effects-style');
+						wp_enqueue_style('essential-blocks-animation');
+						wp_enqueue_script('essential-blocks-eb-animation');
 					}
 					return $content;
 				}
@@ -83,4 +103,4 @@ function create_block_interactive_promo_block_init()
 	}
 }
 
-add_action('init', 'create_block_interactive_promo_block_init');
+add_action('init', 'create_block_interactive_promo_block_init', 99);

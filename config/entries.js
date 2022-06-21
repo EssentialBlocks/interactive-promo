@@ -12,6 +12,9 @@ export { default as faIcons } from "../controls/src/extras/faIcons";
 export { default as ImageAvatar } from "../controls/src/controls/image-avatar";
 export { default as GradientColorControl } from "../controls/src/controls/gradient-color-controller";
 
+import "../controls/src/group-controls";
+export { default as AdvancedControls } from "../controls/src/group-controls/components/advanced-controls";
+
 //Export Helper Functions
 export {
 	softMinifyCssStrings,

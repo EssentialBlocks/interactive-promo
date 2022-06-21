@@ -81,7 +81,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.2.1 - dev =
+= 1.2.1 - 21/06/2022 =
 * Added: Animation, Custom Css and responsive options
 * Improved: Controls & structure
 * Fixed: Fixed editor page hover effect css issue

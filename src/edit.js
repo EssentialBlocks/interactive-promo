@@ -9,7 +9,7 @@ import {
 	MediaPlaceholder,
 	MediaUpload,
 } from "@wordpress/block-editor";
-import { Toolbar, ToolbarButton } from "@wordpress/components";
+import { ToolbarGroup, ToolbarItem, ToolbarButton } from "@wordpress/components";
 import { select } from "@wordpress/data";
 
 /**
@@ -43,11 +43,6 @@ const {
 	generateTypographyStyles,
 	generateResponsiveRangeStyles,
 } = window.EBInteractivePromoControls;
-
-const editorStoreForGettingPreivew =
-	eb_conditional_localize.editor_type === "edit-site"
-		? "core/edit-site"
-		: "core/edit-post";
 
 const Edit = (props) => {
 	const { isSelected, attributes, setAttributes, className, clientId } = props;
@@ -173,128 +168,119 @@ const Edit = (props) => {
 		imageAlignment === "left"
 			? "margin: 0;"
 			: imageAlignment === "right"
-			? "margin: 0 0 0 auto;"
-			: "margin: 0 auto;";
+				? "margin: 0 0 0 auto;"
+				: "margin: 0 auto;";
 
 	const desktopStyles = `
-		 .eb-interactive-promo-wrapper * {
-			 box-sizing: border-box;
-		 }
+		.eb-interactive-promo-wrapper figure > figcaption {
+			box-sizing: border-box;
+		}
+		
+		.eb-interactive-promo-wrapper.${blockId} {
+			${wrapperMarginStylesDesktop}
+			${wrapperPaddingStylesDesktop}
+		}
 
-		 .eb-interactive-promo-wrapper  .eb-interactive-promo-header {
-			 text-transform: none;
-		 }
-		 
-		 .eb-interactive-promo-wrapper.${blockId} {
-			 ${wrapperMarginStylesDesktop}
-			 ${wrapperPaddingStylesDesktop}
-			 ${imageBdShadowStyesDesktop}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
-			 ${headerTypoStylesDesktop}
-			 ${headerColor ? `color: ${headerColor};` : ""}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
-			 ${contentTypoStylesDesktop}
-			 color: ${contentColor};
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
-			 ${imageHeightDesktop.replace(/\D/g, "") ? imageHeightDesktop : "height: 100%;"}
-			 ${
-					imageWidthDesktop.replace(/\D/g, "")
-						? imageWidthDesktop
-						: "max-width: 100%;"
-				}
-			 ${imageAlign}
-			 ${
-					isBackgroundGradient
-						? `background: ${backgroundGradient};`
-						: backgroundColor
-						? `background: ${backgroundColor};`
-						: ""
-				}
-			 width: 100%;
-			 position: relative;
-			 overflow: hidden;
-			 transition: ${imageBdShadowTransitionStyle};
-		 }
-		 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
-			 ${imageBdShadowStylesHoverDesktop}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure img {
-			 min-width: 100%;
-			 object-fit: cover;
-		 }
-	 `;
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
+			${headerTypoStylesDesktop}
+			${headerColor ? `color: ${headerColor};` : ""}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
+			${contentTypoStylesDesktop}
+			color: ${contentColor};
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
+			${imageHeightDesktop.replace(/\D/g, "") ? imageHeightDesktop : "height: 100%;"}
+			${imageWidthDesktop.replace(/\D/g, "") ? imageWidthDesktop : "max-width: 100%;"}
+			${imageBdShadowStyesDesktop}
+			${imageAlign}
+			${isBackgroundGradient
+			? `background: ${backgroundGradient};`
+			: backgroundColor
+				? `background: ${backgroundColor};`
+				: ""
+		}
+			width: 100%;
+			position: relative;
+			overflow: hidden;
+			transition: ${imageBdShadowTransitionStyle};
+		}
+		
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
+			${imageBdShadowStylesHoverDesktop}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure img {
+			min-width: 100%;
+			object-fit: cover;
+		}
+	`;
 	const tabStyles = `
-		 .eb-interactive-promo-wrapper.${blockId} {
-			 ${wrapperMarginStylesTab}
-			 ${wrapperPaddingStylesTab}
-			 ${imageBdShadowStyesTab}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
-			 ${headerTypoStylesTab}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
-			 ${contentTypoStylesTab}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
-			 ${imageHeightTab.replace(/\D/g, "") ? imageHeightTab : "height: 100%;"}
-			 ${imageWidthTab.replace(/\D/g, "") ? imageWidthTab : "max-width: 100%;"}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
-			 ${imageBdShadowStylesHoverTab}
-		 }
-	 `;
+		.eb-interactive-promo-wrapper.${blockId} {
+			${wrapperMarginStylesTab}
+			${wrapperPaddingStylesTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
+			${headerTypoStylesTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
+			${contentTypoStylesTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
+			${imageHeightTab.replace(/\D/g, "") ? imageHeightTab : "height: 100%;"}
+			${imageWidthTab.replace(/\D/g, "") ? imageWidthTab : "max-width: 100%;"}
+			${imageBdShadowStyesTab}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
+			${imageBdShadowStylesHoverTab}
+		}
+	`;
 
 	const mobileStyles = `
-		 .eb-interactive-promo-wrapper.${blockId} {
-			 ${wrapperMarginStylesMobile}
-			 ${wrapperPaddingStylesMobile}
-			 ${imageBdShadowStyesMobile}
-		 }
-		 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
-			 ${headerTypoStylesMobile}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
-			 ${contentTypoStylesMobile}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
-			 ${imageHeightMobile.replace(/\D/g, "") ? imageHeightMobile : "height: 100%;"}
-			 ${imageWidthMobile.replace(/\D/g, "") ? imageWidthMobile : "max-width: 100%;"}
-		 }
- 
-		 .eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
-			 ${imageBdShadowStylesHoverMobile}
-		 }
-	 `;
+		.eb-interactive-promo-wrapper.${blockId} {
+			${wrapperMarginStylesMobile}
+			${wrapperPaddingStylesMobile}
+		}
+		
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
+			${headerTypoStylesMobile}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-content {
+			${contentTypoStylesMobile}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo figure {
+			${imageHeightMobile.replace(/\D/g, "") ? imageHeightMobile : "height: 100%;"}
+			${imageWidthMobile.replace(/\D/g, "") ? imageWidthMobile : "max-width: 100%;"}
+			${imageBdShadowStyesMobile}
+		}
+
+		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
+			${imageBdShadowStylesHoverMobile}
+		}
+	`;
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
-		 ${desktopStyles}
-	 `);
+		${desktopStyles}
+	`);
 
 	// all css styles for Tab in strings ⬇
 	const tabAllStyles = softMinifyCssStrings(`
-		 ${tabStyles}
-	 `);
+		${tabStyles}
+	`);
 
 	// all css styles for Mobile in strings ⬇
 	const mobileAllStyles = softMinifyCssStrings(`
-		 ${mobileStyles}
-	 `);
+		${mobileStyles}
+	`);
 
 	// Set All Style in "blockMeta" Attribute
 	useEffect(() => {
@@ -307,15 +293,7 @@ const Edit = (props) => {
 			setAttributes({ blockMeta: styleObject });
 		}
 	}, [attributes]);
-
-	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
-	useEffect(() => {
-		setAttributes({
-			resOption: select(
-				editorStoreForGettingPreivew
-			).__experimentalGetPreviewDeviceType(),
-		});
-	}, []);
+	
 	// this useEffect is for creating an unique id for each block's unique className by a random unique number
 	useEffect(() => {
 		const BLOCK_PREFIX = "eb-interactive-promo";
@@ -338,55 +316,59 @@ const Edit = (props) => {
 				<Inspector attributes={attributes} setAttributes={setAttributes} />
 			)}
 			<BlockControls>
-				<Toolbar label={__("Options", "essential-blocks")}>
-					<MediaUpload
-						onSelect={(media) =>
-							setAttributes({
-								imageURL: media.url,
-								imageID: media.id,
-							})
-						}
-						allowedTypes={["image"]}
-						value={imageID}
-						render={({ open }) => (
-							<ToolbarButton
-								className="components-toolbar__control"
-								label={__("Edit Image", "essential-blocks")}
-								icon="edit"
-								onClick={open}
+				<ToolbarGroup>
+					<ToolbarItem>
+						{() => (
+							<MediaUpload
+								onSelect={(media) =>
+									setAttributes({
+										imageURL: media.url,
+										imageID: media.id,
+									})
+								}
+								allowedTypes={["image"]}
+								value={imageID}
+								render={({ open }) => (
+									<ToolbarButton
+										className="components-toolbar__control"
+										label={__("Edit Image", "essential-blocks")}
+										icon="edit"
+										onClick={open}
+									/>
+								)}
 							/>
 						)}
-					/>
-				</Toolbar>
+					</ToolbarItem>
+				</ToolbarGroup>
 			</BlockControls>
 			<div {...blockProps}>
 				<style>
 					{`
-				  ${desktopAllStyles}
-  
-				  /* mimmikcssStart */
-  
-				  ${resOption === "Tablet" ? tabAllStyles : " "}
-				  ${resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " "}
-  
-				  /* mimmikcssEnd */
-  
-				  @media all and (max-width: 1024px) {	
-  
-					  /* tabcssStart */			
-					  ${softMinifyCssStrings(tabAllStyles)}
-					  /* tabcssEnd */			
-				  
-				  }
-				  
-				  @media all and (max-width: 767px) {
-					  
-					  /* mobcssStart */			
-					  ${softMinifyCssStrings(mobileAllStyles)}
-					  /* mobcssEnd */			
-				  
-				  }
-				  `}
+				 ${desktopAllStyles}
+ 
+				 /* mimmikcssStart */
+ 
+				 ${resOption === "Tablet" ? tabAllStyles : " "}
+				 ${resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " "}
+ 
+				 /* mimmikcssEnd */
+ 
+				 @media all and (max-width: 1024px) {	
+ 
+					 /* tabcssStart */			
+					 ${softMinifyCssStrings(tabAllStyles)}
+					 /* tabcssEnd */			
+				 
+				 }
+				 
+				 @media all and (max-width: 767px) {
+					 
+					 /* mobcssStart */			
+					 ${softMinifyCssStrings(mobileAllStyles)}
+					 /* mobcssEnd */			
+				 
+				 }
+				 `}
 				</style>
 				<div className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}>
 					<div className={`eb-interactive-promo-wrapper ${blockId}`}>

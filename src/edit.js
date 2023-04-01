@@ -9,7 +9,11 @@ import {
 	MediaPlaceholder,
 	MediaUpload,
 } from "@wordpress/block-editor";
-import { ToolbarGroup, ToolbarItem, ToolbarButton } from "@wordpress/components";
+import {
+	ToolbarGroup,
+	ToolbarItem,
+	ToolbarButton,
+} from "@wordpress/components";
 import { select } from "@wordpress/data";
 
 /**
@@ -168,14 +172,14 @@ const Edit = (props) => {
 		imageAlignment === "left"
 			? "margin: 0;"
 			: imageAlignment === "right"
-				? "margin: 0 0 0 auto;"
-				: "margin: 0 auto;";
+			? "margin: 0 0 0 auto;"
+			: "margin: 0 auto;";
 
 	const desktopStyles = `
 		.eb-interactive-promo-wrapper figure > figcaption {
 			box-sizing: border-box;
 		}
-		
+
 		.eb-interactive-promo-wrapper.${blockId} {
 			${wrapperMarginStylesDesktop}
 			${wrapperPaddingStylesDesktop}
@@ -196,18 +200,19 @@ const Edit = (props) => {
 			${imageWidthDesktop.replace(/\D/g, "") ? imageWidthDesktop : "max-width: 100%;"}
 			${imageBdShadowStyesDesktop}
 			${imageAlign}
-			${isBackgroundGradient
-			? `background: ${backgroundGradient};`
-			: backgroundColor
-				? `background: ${backgroundColor};`
-				: ""
-		}
+			${
+				isBackgroundGradient
+					? `background: ${backgroundGradient};`
+					: backgroundColor
+					? `background: ${backgroundColor};`
+					: ""
+			}
 			width: 100%;
 			position: relative;
 			overflow: hidden;
 			transition: ${imageBdShadowTransitionStyle};
 		}
-		
+
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo:hover figure {
 			${imageBdShadowStylesHoverDesktop}
 		}
@@ -247,7 +252,7 @@ const Edit = (props) => {
 			${wrapperMarginStylesMobile}
 			${wrapperPaddingStylesMobile}
 		}
-		
+
 		.eb-interactive-promo-wrapper.${blockId} .eb-interactive-promo-header {
 			${headerTypoStylesMobile}
 		}
@@ -293,7 +298,7 @@ const Edit = (props) => {
 			setAttributes({ blockMeta: styleObject });
 		}
 	}, [attributes]);
-	
+
 	// this useEffect is for creating an unique id for each block's unique className by a random unique number
 	useEffect(() => {
 		const BLOCK_PREFIX = "eb-interactive-promo";
@@ -345,28 +350,28 @@ const Edit = (props) => {
 				<style>
 					{`
 				 ${desktopAllStyles}
- 
+
 				 /* mimmikcssStart */
- 
+
 				 ${resOption === "Tablet" ? tabAllStyles : " "}
 				 ${resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " "}
- 
+
 				 /* mimmikcssEnd */
- 
-				 @media all and (max-width: 1024px) {	
- 
-					 /* tabcssStart */			
+
+				 @media all and (max-width: 1024px) {
+
+					 /* tabcssStart */
 					 ${softMinifyCssStrings(tabAllStyles)}
-					 /* tabcssEnd */			
-				 
+					 /* tabcssEnd */
+
 				 }
-				 
+
 				 @media all and (max-width: 767px) {
-					 
-					 /* mobcssStart */			
+
+					 /* mobcssStart */
 					 ${softMinifyCssStrings(mobileAllStyles)}
-					 /* mobcssEnd */			
-				 
+					 /* mobcssEnd */
+
 				 }
 				 `}
 				</style>

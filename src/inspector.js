@@ -13,7 +13,7 @@ import {
 	TextareaControl,
 	ToggleControl,
 	SelectControl,
-	TabPanel,
+	TabPanel
 } from "@wordpress/components";
 import { select } from "@wordpress/data";
 
@@ -101,9 +101,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 							{tab.name === "general" && (
 								<>
 									<PanelBody>
-										<BaseControl
-											label={__("Background Image", "essential-blocks")}
-										>
+										<BaseControl label={__("Background Image", "essential-blocks")}>
 											<MediaUpload
 												onSelect={(media) =>
 													setAttributes({
@@ -311,10 +309,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										/>
 									</PanelBody>
 
-									<AdvancedControls
-										attributes={attributes}
-										setAttributes={setAttributes}
-									/>
+									<AdvancedControls attributes={attributes} setAttributes={setAttributes} />
 								</>
 							)}
 						</div>

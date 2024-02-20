@@ -1,6 +1,6 @@
 const example = {
-	attributes: {
-		imageURL: "https://essential-addons.com/elementor/wp-content/uploads/2020/01/image_16.png",
-	},
+    attributes: {
+        imageURL: EssentialBlocksLocalize?.image_url + "/gallery-images/china.jpg",
+    },
 };
 export default example;

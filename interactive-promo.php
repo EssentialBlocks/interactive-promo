@@ -4,7 +4,7 @@
  * Plugin Name:     Interactive Promo
  * Plugin URI:      https://essential-blocks.com
  * Description:     Engage your potential audience with an exciting promo.
- * Version:         1.2.5
+ * Version:         1.2.6
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later

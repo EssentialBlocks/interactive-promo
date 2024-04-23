@@ -29,7 +29,7 @@ require_once __DIR__ . '/includes/helpers.php';
 require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_interactive_promo_block_init() {
-    define( 'INTERACTIVE_PROMO_BLOCKS_VERSION', "1.2.5" );
+    define( 'INTERACTIVE_PROMO_BLOCKS_VERSION', "1.2.6" );
     define( 'INTERACTIVE_PROMO_BLOCKS_ADMIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH', dirname( __FILE__ ) );
 

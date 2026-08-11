@@ -1,16 +1,16 @@
-=== Interactive Promo ===
-Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir, RahatSheikhLeon
-Tags: block, blocks, promo, card, cta, interactive, animated, image block, gutenberg, gutenberg blocks
-Requires at least: 6.0
-Tested up to: 7.0
-Stable tag: 1.5.0
-Requires PHP: 7.4
-License: GPLv3 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+# Interactive Promo
+**Contributors:** wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir, RahatSheikhLeon  
+**Tags:** block, blocks, promo, card, cta, interactive, animated, image block, gutenberg, gutenberg blocks  
+**Requires at least:** 6.0  
+**Tested up to:** 7.0  
+**Stable tag:** 1.5.0  
+**Requires PHP:** 7.4  
+**License:** GPLv3 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
 Engage your potential audience with an exciting promo.
 
-== Description ==
+## Description
 
 Using this **Interactive Promo** plugin, you can highlight your promotional offer, existing news or any other content which you want to let your visitors pay attention to. You can easily use this plugin in WordPress block editor and increase the visibility of your promotional campaigns.
 
@@ -58,31 +58,31 @@ Consider checking out our other WordPress solutions & boost your WordPress websi
 
 ⚡ [Flexia](http://wordpress.org/plugins/flexia): Most lightweight, customizable & multi purpose theme for WordPress
 
-== Installation ==
+## Installation
 
-= Modern Way: =
+### Modern Way:
 1. Go to the WordPress Block/Gutenberg Editor
 2. Search For "Image Comparison".
 3. Install in 1-click
 
-= Old Way: =
+### Old Way:
 1. Upload `interactive-promo` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Follow the [Documentation](https://essential-blocks.com/docs/)
 
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions
 
-= Does it work with any WordPress theme? =
+### Does it work with any WordPress theme?
 
 Yes, it will work with any standard WordPress theme.
 
-== Screenshots ==
+## Screenshots
 
 
-== Changelog ==
+## Changelog
 
-= 1.5.0 - 11/08/2026 =
+### 1.5.0 - 11/08/2026
 * Improved: Compatibility with PHP 7.4 through PHP 8.5
 * Improved: Compatibility with WordPress up to 7.0
 * Fixed: Block styles (height, width, alignment, colors, typography, spacing) not applying on the frontend
@@ -93,39 +93,39 @@ Yes, it will work with any standard WordPress theme.
 * Fixed: Fatal error when the bundled style-handler library was missing
 * Fixed: PHP 8 type errors while reading build asset manifests
 
-= 1.2.6 - 23/04/2024 =
+### 1.2.6 - 23/04/2024
 * Fixed: compatibility support with WordPress 6.5 version
 * Improved: controls
 
-= 1.2.5 - 20/02/2024 =
+### 1.2.5 - 20/02/2024
 * Improved: Font loader & Controls
 
-= 1.2.4 - 03/04/2023 =
+### 1.2.4 - 03/04/2023
 * Improved: Font loader & Controls
 
-= 1.2.3 - 07/12/2022 =
+### 1.2.3 - 07/12/2022
 * Improved: Controls & structure
 * Fixed: Minor issues
 
-= 1.2.2 - 13/09/2022 =
+### 1.2.2 - 13/09/2022
 * Improved: Style handler & controls
 
-= 1.2.1 - 21/06/2022 =
+### 1.2.1 - 21/06/2022
 * Added: Animation, Custom Css and responsive options
 * Improved: Controls & structure
 * Fixed: Fixed editor page hover effect css issue
 * Improved: Converted style-handler to php for working perfectly with Reusable blocks and FSE
 
-= 1.2.0 - 09/02/2022 =
+### 1.2.0 - 09/02/2022
 * Added: Block Base theme support
 * Improved: Font Library Updated
 * Improved: Controls and structure
 
-= 1.1.1 - 23/08/2021 =
+### 1.1.1 - 23/08/2021
 * Improved: Security for asset generation
 * Fixed: Deprecated warning
 
-= 1.1.0 05/08/2021 =
+### 1.1.0 05/08/2021
 * Added: Responsive controls
 * Added: Margin, padding option in wrapper
 * Added: Alignment option
@@ -133,12 +133,12 @@ Yes, it will work with any standard WordPress theme.
 * Added: Advanced and responsive border radius and shadow option
 * Improved: Inspactor panel design
 
-= 1.0.1 =
+### 1.0.1
 * Added: Keywords
 
-= 1.0.0 =
+### 1.0.0
 * Initial Release
 
-== Upgrade Notice ==
+## Upgrade Notice
 
 [Minor Update] Bugfix and stability

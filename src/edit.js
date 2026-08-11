@@ -42,6 +42,28 @@ const Edit = (props) => {
 		classHook,
 	} = attributes;
 
+	// NOTE: every hook must run before the `!imageURL` early return below.
+	// Returning ahead of them made the hook count differ between the
+	// "no image yet" and "image selected" renders, which throws
+	// "Rendered more hooks than during the previous render" the first time a
+	// media item is picked — and left blockId ungenerated when it did.
+
+	// this useEffect is for creating an unique id for each block's unique className by a random unique number
+	useEffect(() => {
+		const BLOCK_PREFIX = "eb-interactive-promo";
+		duplicateBlockIdFix({
+			BLOCK_PREFIX,
+			blockId,
+			setAttributes,
+			select,
+			clientId,
+		});
+	}, []);
+
+	const blockProps = useBlockProps({
+		className: classnames(className, `eb-guten-block-main-parent-wrapper`),
+	});
+
 	if (!imageURL) {
 		return (
 			<MediaPlaceholder
@@ -60,22 +82,6 @@ const Edit = (props) => {
 			/>
 		);
 	}
-
-	// this useEffect is for creating an unique id for each block's unique className by a random unique number
-	useEffect(() => {
-		const BLOCK_PREFIX = "eb-interactive-promo";
-		duplicateBlockIdFix({
-			BLOCK_PREFIX,
-			blockId,
-			setAttributes,
-			select,
-			clientId,
-		});
-	}, []);
-
-	const blockProps = useBlockProps({
-		className: classnames(className, `eb-guten-block-main-parent-wrapper`),
-	});
 
 	return (
 		<>

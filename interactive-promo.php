@@ -48,9 +48,11 @@ function create_block_interactive_promo_block_init() {
 
     $script_asset_path = INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH . "/dist/index.asset.php";
     if ( ! file_exists( $script_asset_path ) ) {
-        throw new Error(
-            'You need to run `npm start` or `npm run build` for the "interactive-promo/interactive-promo" block first.'
-        );
+        // This used to `throw`, which is an uncaught fatal on `init` — it takes
+        // down the front end *and* wp-admin, leaving no way to deactivate the
+        // plugin. Degrade instead: skip registration and tell an administrator.
+        add_action( 'admin_notices', 'interactive_promo_missing_build_notice' );
+        return;
     }
     $index_js         = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'dist/index.js';
     $script_asset     = require $script_asset_path;
@@ -117,3 +119,21 @@ function create_block_interactive_promo_block_init() {
 }
 
 add_action( 'init', 'create_block_interactive_promo_block_init', 99 );
+
+/**
+ * Admin notice shown when the compiled block assets are missing.
+ *
+ * Only reachable when `dist/index.asset.php` is absent, i.e. a source checkout
+ * that was never built, or a broken/partial install.
+ */
+function interactive_promo_missing_build_notice() {
+    if ( ! current_user_can( 'activate_plugins' ) ) {
+        return;
+    }
+
+    printf(
+        '<div class="notice notice-error"><p><strong>%1$s</strong> %2$s</p></div>',
+        esc_html__( 'Interactive Promo:', 'interactive-promo' ),
+        esc_html__( 'the compiled block assets are missing, so the block was not registered. Run `npm ci && npm run build` in the plugin directory, or reinstall the plugin.', 'interactive-promo' )
+    );
+}

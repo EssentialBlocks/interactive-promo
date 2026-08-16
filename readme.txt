@@ -1,6 +1,6 @@
 === Interactive Promo ===
 Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir, RahatSheikhLeon
-Tags: block, blocks, promo, card, cta, interactive, animated, image block, gutenberg, gutenberg blocks
+Tags: block, blocks, promo, card, cta
 Requires at least: 6.0
 Tested up to: 7.0.4
 Stable tag: 1.3.0

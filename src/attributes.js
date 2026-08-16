@@ -74,13 +74,18 @@ const attributes = {
         type: "boolean",
         default: false,
     },
+    // The --eb-global-* custom properties are defined by the Essential Blocks
+    // *main* plugin. This is a standalone block, so without a fallback the
+    // whole declaration is invalid-at-computed-value-time and the color is
+    // dropped. Fallbacks mirror Helper::global_colors() in Essential Blocks,
+    // so EB's configured values still win wherever it is installed.
     headerColor: {
         type: "string",
-        default: "var(--eb-global-primary-color)",
+        default: "var(--eb-global-primary-color, #101828)",
     },
     contentColor: {
         type: "string",
-        default: "var(--eb-global-heading-color)",
+        default: "var(--eb-global-heading-color, #1D2939)",
     },
     link: {
         type: "string",
@@ -95,7 +100,7 @@ const attributes = {
     },
     backgroundColor: {
         type: "string",
-        default: "var(--eb-global-background-color)",
+        default: "var(--eb-global-background-color, #F9FAFB)",
     },
     backgroundGradient: {
         type: "string",

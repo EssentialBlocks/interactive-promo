@@ -67,6 +67,10 @@ class Interactive_Font_Loader {
         $keys             = preg_grep( '/^(\w+)FontFamily/i', array_keys( $attributes ), 0 );
         $googleFontFamily = [];
         foreach ( $keys as $key ) {
+            // Non-scalar attribute values are not valid array offsets on PHP 8.
+            if ( ! is_scalar( $attributes[$key] ) ) {
+                continue;
+            }
             $googleFontFamily[$attributes[$key]] = $attributes[$key];
         }
         return $googleFontFamily;
@@ -94,7 +98,8 @@ class Interactive_Font_Loader {
                 $gfonts      = '';
                 $gfonts_attr = ':100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic';
                 foreach ( $fonts as $font ) {
-                    $gfonts .= str_replace( ' ', '+', trim( $font ) ) . $gfonts_attr . '|';
+                    // Cast: passing null to trim() is deprecated on PHP 8.1+.
+                    $gfonts .= str_replace( ' ', '+', trim( (string) $font ) ) . $gfonts_attr . '|';
                 }
                 if ( ! empty( $gfonts ) ) {
                     $query_args = [

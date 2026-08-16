@@ -17,23 +17,65 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
             submodules: recursive
             token: ${{ secrets.EB_PAT }}
       # node version
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v6
         with:
-          node-version: '14'
-      # Runs a single command using the runners shell
-      # - name: Git Submodule Cloning
-      #   run: git submodule update --init --recursive
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      - name: Running NPM Install & Build
+          node-version: '20'
+
+      # `npm ci` (not `npm install`) so the release is built from the committed
+      # lockfile instead of whatever the registry resolves on the day.
+      - name: Install root dependencies
+        run: npm ci
+
+      # Builds dist/index.js + dist/index.asset.php from src/.
+      - name: Build root bundle
+        run: npm run build
+
+      # `controls` is a git submodule with its own package.json, lockfile and
+      # node_modules. It is NOT covered by the root build: the root webpack
+      # entry is ./src/index.js only. Without these two steps dist/modules.js,
+      # dist/modules.css and dist/frontend.js ship as whatever was last
+      # committed, which silently goes stale when the submodule pointer moves.
+      #
+      # Running in `controls/` means npm resolves that project's own webpack and
+      # @wordpress/scripts, never the root project's.
+      #
+      # The install needs legacy peer-dep resolution (react-sortable-hoc@2 peers
+      # react ^16||^17 against @wordpress/* peering react ^18); that is declared
+      # in controls/.npmrc rather than passed here, so local and CI installs
+      # resolve identically.
+      - name: Install controls dependencies
+        working-directory: controls
+        run: npm ci
+
+      - name: Build controls bundles
+        working-directory: controls
+        run: npm run build
+
+      # Fail loudly rather than shipping a half-built dist/. A webpack run that
+      # errors on a missing module can still exit having written nothing.
+      - name: Verify build artifacts
         run: |
-          npm install
-          npm run build
+          for artifact in \
+            dist/index.js \
+            dist/index.asset.php \
+            dist/modules.js \
+            dist/modules.css \
+            dist/modules.asset.php \
+            dist/frontend.js \
+            dist/frontend.asset.php
+          do
+            if [ ! -s "$artifact" ]; then
+              echo "::error::missing or empty build artifact: $artifact"
+              exit 1
+            fi
+          done
+          echo "All expected build artifacts present."
+
       - name: WordPress Plugin Deploy
         id: deploy
         uses: 10up/action-wordpress-plugin-deploy@stable

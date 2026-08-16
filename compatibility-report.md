@@ -1,7 +1,7 @@
 # Interactive Promo — Compatibility Report
 
 **Plugin:** Interactive Promo (`interactive-promo`)
-**Version:** 1.2.6 → 1.5.0
+**Version:** 1.2.6 → 1.3.0
 **Branch:** `interactive-promo-dev` (off `master` @ `1a183fe`)
 **Date of pass:** 2026-08-10
 **Nothing committed or pushed** — all changes left in the working tree for review.
@@ -149,7 +149,7 @@ minimums returned only the two `get_bloginfo` float casts (#5, #6).
 | 1 | Wrapped the submodule `require_once` in `file_exists()`. Missing style-handler now degrades (no generated CSS) instead of fataling the site. | `interactive-promo.php:37-41` |
 | 2 | `include_once` → `require`, gated behind `file_exists()` with an early `return`. Result coerced with `is_array()`, and `dependencies` / `version` read through `isset()` fallbacks into `$controls_deps` / `$controls_version`. Explanatory comment left on the `require` so nobody reintroduces `_once`. | `helpers.php:50-66` |
 | 3 | `$script_asset` coerced with `is_array()`; `dependencies` defaults to `[]`, `version` defaults to `INTERACTIVE_PROMO_BLOCKS_VERSION`. | `interactive-promo.php:56-72` |
-| 4 | Added `Requires at least: 6.0`, `Tested up to: 7.0`, `Requires PHP: 7.4` to the plugin header; added `Requires PHP: 7.4` to readme.txt and updated its `Requires at least` / `Tested up to`. | `interactive-promo.php`, `readme.txt` |
+| 4 | Added `Requires at least: 6.0`, `Tested up to: 7.0.4`, `Requires PHP: 7.4` to the plugin header; added `Requires PHP: 7.4` to readme.txt and updated its `Requires at least` / `Tested up to`. | `interactive-promo.php`, `readme.txt` |
 | 5 | **Per user decision**: `eb_wp_version` left as a float for backward compatibility with existing controls JS; added a new `eb_wp_version_string` key carrying the raw version string, with a comment directing new code to use it. Nothing existing changes. | `helpers.php:61-66` |
 | 6 | No change — dead under the WP 6.0 floor, and the user chose to keep the branch. | — |
 | 7, 8 | Added `if ( ! defined( 'ABSPATH' ) ) { exit; }` guards. All five plugin PHP files now carry one. | `admin-enqueue.php`, `interactive-promo.php` |
@@ -163,14 +163,14 @@ minimums returned only the two `get_bloginfo` float casts (#5, #6).
 
 ### Version bump
 
-1.2.6 → **1.5.0** (minor), synced across:
+1.2.6 → **1.3.0** (minor), synced across:
 
 - `interactive-promo.php` header `Version:`
 - `interactive-promo.php` `define( 'INTERACTIVE_PROMO_BLOCKS_VERSION', … )`
 - `readme.txt` `Stable tag:`
 - `package.json` `"version"`
 
-A 1.5.0 changelog entry was added to readme.txt. `composer.json` does not exist
+A 1.3.0 changelog entry was added to readme.txt. `composer.json` does not exist
 in this plugin, so there was nothing to sync there.
 
 ---
@@ -283,10 +283,10 @@ polyfill unconditionally.
 |---|---|---|
 | `Requires PHP` | *(absent in both)* | **7.4** (header + readme) |
 | `Requires at least` | absent / 5.6 | **6.0** (header + readme) |
-| `Tested up to` | absent / 6.5 | **7.0** (header + readme) |
-| `Version` / `Stable tag` | 1.2.6 | **1.5.0** |
+| `Tested up to` | absent / 6.5 | **7.0.4** (header + readme) |
+| `Version` / `Stable tag` | 1.2.6 | **1.3.0** |
 
-Verified range: **PHP 7.4 – 8.5, WordPress 6.0 – 7.0.**
+Verified range: **PHP 7.4 – 8.5, WordPress 6.0 – 7.0.4.**
 
 ---
 

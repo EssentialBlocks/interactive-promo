@@ -2,8 +2,8 @@
 Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, fencermonir, RahatSheikhLeon
 Tags: block, blocks, promo, card, cta, interactive, animated, image block, gutenberg, gutenberg blocks
 Requires at least: 6.0
-Tested up to: 7.0
-Stable tag: 1.5.0
+Tested up to: 7.0.4
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -82,16 +82,13 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.5.0 - 11/08/2026 =
-* Improved: Compatibility with PHP 7.4 through PHP 8.5
-* Improved: Compatibility with WordPress up to 7.0
-* Fixed: Block styles (height, width, alignment, colors, typography, spacing) not applying on the frontend
-* Fixed: Responsive tablet & mobile styles being ignored in the editor
-* Fixed: Promo effects rendering unstyled in the Full Site Editor
-* Fixed: Editor error when selecting an image for a newly inserted block
-* Fixed: Header, content & background colors resolving to nothing without Essential Blocks installed
-* Fixed: Fatal error when the bundled style-handler library was missing
-* Fixed: PHP 8 type errors while reading build asset manifests
+= 1.3.0 - 16/08/2026 =
+* Fixed: PHP 8.0–8.5 compatibility issues
+* Fixed: WordPress version detection
+* Fixed: PHP 7.x compatibility
+* Fixed: Asset loading issues on newer WordPress versions
+* Improved: Asset loading and overall stability
+* Tested up to WordPress 7.0.4
 
 = 1.2.6 - 23/04/2024 =
 * Fixed: compatibility support with WordPress 6.5 version

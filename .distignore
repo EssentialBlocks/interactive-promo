@@ -1,53 +1,82 @@
 # A set of files you probably don't want in your WordPress.org distribution
+
+# Build tooling & transpiler config
 .babelrc
-.deployignore
-.distignore
-.editorconfig
-.eslintignore
-.eslintrc
-.gitmodules
-.git
-.gitignore
-.github
-.gitattributes
-.gitlab-ci.yml
-.travis.yml
-.DS_Store
-Thumbs.db
-behat.yml
-bitbucket-pipelines.yml
-bin
-.circleci/config.yml
-composer.json
-composer.lock
-dependencies.yml
+.babelrc.js
+.babelrc.json
+babel.config.js
+webpack.config.js
 Gruntfile.js
+gulpfile.js
 package.json
 package-lock.json
+yarn.lock
+dependencies.yml
+
+# Editor / IDE
+.editorconfig
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Linting & coding standards
+.eslintignore
+.eslintrc
+.phpcs.xml
+.phpcs.xml.dist
+phpcs.xml
+phpcs.xml.dist
+
+# Version control & CI
+.git
+# Submodules carry a `.git` *file* (a gitdir pointer), not a directory. The bare
+# `.git` rule above does not catch those, so list the paths explicitly.
+lib/style-handler/.git
+controls/.git
+.gitignore
+.gitattributes
+.gitmodules
+.github
+.gitlab-ci.yml
+.travis.yml
+bitbucket-pipelines.yml
+.circleci/config.yml
+behat.yml
+wp-cli.local.yml
+
+# Dependency managers
+composer.json
+composer.lock
+vendor
+node_modules
+
+# Tests
+tests
 phpunit.xml
 phpunit.xml.dist
 multisite.xml
 multisite.xml.dist
-.phpcs.xml
-phpcs.xml
-.phpcs.xml.dist
-phpcs.xml.dist
+bin
+
+# Source — everything here is compiled into dist/ at build time
+src
+config
+controls
+util
+
+# Docs & repo assets (not shipped to users)
 README.md
-webpack.config.js
-wp-cli.local.yml
-yarn.lock
-tests
-vendor
-node_modules
+compatibility-report.md
+.wordpress-org
+
+# Packaging leftovers
+.deployignore
+.distignore
 *.sql
 *.tar.gz
 *.zip
-gulpfile.js
-.git
-node_modules/**/*.*
-dist/**/*.*
-**/*.zip
-src
-util
-.wordpress-org
-.idea
+
+# Source maps: dist/ itself MUST ship (the plugin requires dist/index.asset.php
+# at runtime), but the .map files are dev-only dead weight.
+dist/*.*.map

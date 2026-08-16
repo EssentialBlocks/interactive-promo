@@ -4,15 +4,23 @@
  * Plugin Name:     Interactive Promo
  * Plugin URI:      https://essential-blocks.com
  * Description:     Engage your potential audience with an exciting promo.
- * Version:         1.2.6
+ * Version:         1.3.0
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:     interactive-promo
+ * Requires at least: 6.0
+ * Tested up to:    7.0.4
+ * Requires PHP:    7.4
  *
  * @package         interactive-promo
  */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
 /**
  * Registers all block assets so that they can be enqueued through the block editor
@@ -26,22 +34,30 @@ require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
 require_once __DIR__ . '/includes/admin-enqueue.php';
 require_once __DIR__ . '/includes/helpers.php';
-require_once __DIR__ . '/lib/style-handler/style-handler.php';
+
+// `lib/style-handler` is a git submodule; guard the include so an uninitialised
+// submodule degrades instead of fataling the whole site.
+if ( file_exists( __DIR__ . '/lib/style-handler/style-handler.php' ) ) {
+    require_once __DIR__ . '/lib/style-handler/style-handler.php';
+}
 
 function create_block_interactive_promo_block_init() {
-    define( 'INTERACTIVE_PROMO_BLOCKS_VERSION', "1.2.6" );
+    define( 'INTERACTIVE_PROMO_BLOCKS_VERSION', "1.3.0" );
     define( 'INTERACTIVE_PROMO_BLOCKS_ADMIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH', dirname( __FILE__ ) );
 
     $script_asset_path = INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH . "/dist/index.asset.php";
     if ( ! file_exists( $script_asset_path ) ) {
-        throw new Error(
-            'You need to run `npm start` or `npm run build` for the "interactive-promo/interactive-promo" block first.'
-        );
+        // This used to `throw`, which is an uncaught fatal on `init` — it takes
+        // down the front end *and* wp-admin, leaving no way to deactivate the
+        // plugin. Degrade instead: skip registration and tell an administrator.
+        add_action( 'admin_notices', 'interactive_promo_missing_build_notice' );
+        return;
     }
     $index_js         = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'dist/index.js';
     $script_asset     = require $script_asset_path;
-    $all_dependencies = array_merge( $script_asset['dependencies'], [
+    $script_asset     = is_array( $script_asset ) ? $script_asset : [];
+    $all_dependencies = array_merge( isset( $script_asset['dependencies'] ) ? (array) $script_asset['dependencies'] : [], [
         'wp-blocks',
         'wp-i18n',
         'wp-element',
@@ -54,7 +70,7 @@ function create_block_interactive_promo_block_init() {
         'interactive-promo-block-editor-js',
         $index_js,
         $all_dependencies,
-        $script_asset['version']
+        isset( $script_asset['version'] ) ? $script_asset['version'] : INTERACTIVE_PROMO_BLOCKS_VERSION
     );
 
     $load_animation_js = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'assets/js/eb-animation-load.js';
@@ -74,12 +90,13 @@ function create_block_interactive_promo_block_init() {
         INTERACTIVE_PROMO_BLOCKS_VERSION
     );
 
-    $hover_style = 'assets/css/hover-effects.css';
+    $hover_style      = 'assets/css/hover-effects.css';
+    $hover_style_path = INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH . "/$hover_style";
     wp_register_style(
         'hover-effects-style',
         plugins_url( $hover_style, __FILE__ ),
         [],
-        filemtime( INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH . "/$hover_style" ),
+        file_exists( $hover_style_path ) ? filemtime( $hover_style_path ) : INTERACTIVE_PROMO_BLOCKS_VERSION,
         'all'
     );
 
@@ -102,3 +119,21 @@ function create_block_interactive_promo_block_init() {
 }
 
 add_action( 'init', 'create_block_interactive_promo_block_init', 99 );
+
+/**
+ * Admin notice shown when the compiled block assets are missing.
+ *
+ * Only reachable when `dist/index.asset.php` is absent, i.e. a source checkout
+ * that was never built, or a broken/partial install.
+ */
+function interactive_promo_missing_build_notice() {
+    if ( ! current_user_can( 'activate_plugins' ) ) {
+        return;
+    }
+
+    printf(
+        '<div class="notice notice-error"><p><strong>%1$s</strong> %2$s</p></div>',
+        esc_html__( 'Interactive Promo:', 'interactive-promo' ),
+        esc_html__( 'the compiled block assets are missing, so the block was not registered. Run `npm ci && npm run build` in the plugin directory, or reinstall the plugin.', 'interactive-promo' )
+    );
+}

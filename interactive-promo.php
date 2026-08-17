@@ -110,6 +110,9 @@ function create_block_interactive_promo_block_init() {
                         wp_enqueue_style( 'hover-effects-style' );
                         wp_enqueue_style( 'essential-blocks-animation' );
                         wp_enqueue_script( 'essential-blocks-eb-animation' );
+                        // Google fonts are derived from this block's own typography
+                        // attributes, so published posts work without a re-save.
+                        Interactive_Font_Loader::enqueue_for_attributes( $attributes );
                     }
                     return $content;
                 }

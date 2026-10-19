@@ -80,3 +80,15 @@ compatibility-report.md
 # Source maps: dist/ itself MUST ship (the plugin requires dist/index.asset.php
 # at runtime), but the .map files are dev-only dead weight.
 dist/*.*.map
+
+# Source maps: development only
+*.map
+
+# Controls' eb_frontend helper bundle: built by webpack but never registered or
+# enqueued by this plugin
+dist/frontend.js
+dist/frontend.asset.php
+
+# Style-handler JS sources (the PHP handler is what ships)
+lib/style-handler/style-handler.js
+lib/style-handler/helpers.js

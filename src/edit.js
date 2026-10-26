@@ -20,6 +20,7 @@ import classnames from "classnames";
 import Inspector from "./inspector";
 
 import Style from "./style";
+import sanitizeLink from "./sanitize-link";
 
 const {
 	duplicateBlockIdFix,
@@ -130,7 +131,7 @@ const Edit = (props) => {
 										<p className="eb-interactive-promo-content">{content}</p>
 										{link && (
 											<a
-												href={link}
+												href={sanitizeLink(link)}
 												target={newWindow ? "_blank" : "_self"}
 												rel="noopener noreferrer"
 											/>

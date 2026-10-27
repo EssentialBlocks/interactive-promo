@@ -92,7 +92,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.3.1 - 26/10/2026 =
+= 1.3.1 - 27/10/2026 =
 * Improved: Security enhancements
 * Few minor bug fixes & improvements
 

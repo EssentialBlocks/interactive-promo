@@ -130,7 +130,7 @@ function interactive_promo_block_icon_selected_style() {
         'eb-block-icon-selected',
         plugins_url( 'assets/css/block-icon-selected.css', __FILE__ ),
         [],
-        '1.0.0'
+        INTERACTIVE_PROMO_BLOCKS_VERSION
     );
 }
 add_action( 'enqueue_block_editor_assets', 'interactive_promo_block_icon_selected_style' );
@@ -152,3 +152,19 @@ function interactive_promo_missing_build_notice() {
         esc_html__( 'the compiled block assets are missing, so the block was not registered. Run `npm ci && npm run build` in the plugin directory, or reinstall the plugin.', 'interactive-promo' )
     );
 }
+
+/**
+ * Let Essential Blocks' animation assets win on the front end when it is active.
+ *
+ * Both plugins register these handles and the first registration wins. This
+ * plugin's loader doesn't set `window.ebAnimationLoaded`, so Essential Blocks'
+ * failsafe would reveal every animated block without playing it. Essential Blocks
+ * registers its own at priority 20 and handles the same `.eb___animated` classes.
+ */
+function interactive_promo_use_essential_blocks_animation() {
+    if ( defined( 'ESSENTIAL_BLOCKS_VERSION' ) ) {
+        wp_deregister_script( 'essential-blocks-eb-animation' );
+        wp_deregister_style( 'essential-blocks-animation' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'interactive_promo_use_essential_blocks_animation', 19 );

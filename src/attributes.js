@@ -59,8 +59,10 @@ const attributes = {
         source: "attribute",
         attribute: "src",
     },
+    // Media IDs are numbers; typed as "string" the saved ID failed validation
+    // and was dropped every time the post was reopened.
     imageID: {
-        type: "string",
+        type: "number",
         default: null,
     },
     imageAltTag: {
@@ -68,7 +70,7 @@ const attributes = {
         selector: "img",
         source: "attribute",
         attribute: "alt",
-        default: "image",
+        default: "",
     },
     newWindow: {
         type: "boolean",

@@ -63,7 +63,7 @@ class Interactive_Promo_Helper
 
             wp_register_script(
                 "interactive-promo-blocks-controls-util",
-                INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . '/dist/modules.js',
+                INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'dist/modules.js',
                 array_merge($controls_deps, ['lodash']),
                 $controls_version,
                 true
@@ -76,6 +76,8 @@ class Interactive_Promo_Helper
                 'eb_wp_version'        => (float) get_bloginfo('version'),
                 'eb_wp_version_string' => get_bloginfo('version'),
                 'rest_rootURL' => get_rest_url(),
+                // Base URL of the bundled images; the block's inserter preview reads it.
+                'image_url'    => INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'assets/images',
                 // Consumed by the controls' StyleComponent to build the editor's
                 // tab/mobile media queries. Without these the editor emits
                 // "max-width: undefinedpx" and silently drops every responsive
@@ -100,7 +102,7 @@ class Interactive_Promo_Helper
 
             wp_enqueue_style(
                 'essential-blocks-editor-css',
-                INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . '/dist/modules.css',
+                INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'dist/modules.css',
                 array('essential-blocks-animation'),
                 $controls_version,
                 'all'
@@ -144,6 +146,41 @@ class Interactive_Promo_Helper
             $normalised = preg_replace('/[\t\n\r]/', '', trim($href, "\x00..\x20"));
             if (preg_match('/^([a-z][a-z0-9+.\-]*):/i', $normalised, $scheme) && in_array(strtolower($scheme[1]), $blocked, true)) {
                 $tags->set_attribute('href', '#');
+            }
+        }
+
+        return $tags->get_updated_html();
+    }
+
+    /**
+     * Give the promo's overlay link an accessible name.
+     *
+     * The saved `<a>` has no text, so screen readers announce it as an unnamed
+     * link. Done at render time rather than in save() so blocks saved before
+     * this change get the label too, without a block deprecation. Needs the
+     * HTML API (WordPress 6.2+); on older versions the markup is returned as is.
+     *
+     * @param string $content Saved block markup.
+     * @return string
+     */
+    public static function label_links($content)
+    {
+        if (!is_string($content) || false === stripos($content, '<a') || !class_exists('WP_HTML_Tag_Processor')) {
+            return $content;
+        }
+
+        if (!preg_match('/<h2 class="eb-interactive-promo-header">(.*?)<\/h2>/s', $content, $match)) {
+            return $content;
+        }
+        $label = trim(html_entity_decode(wp_strip_all_tags($match[1]), ENT_QUOTES, 'UTF-8'));
+        if ('' === $label) {
+            return $content;
+        }
+
+        $tags = new WP_HTML_Tag_Processor($content);
+        while ($tags->next_tag('a')) {
+            if (null === $tags->get_attribute('aria-label')) {
+                $tags->set_attribute('aria-label', $label);
             }
         }
 

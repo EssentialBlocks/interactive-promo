@@ -65,22 +65,31 @@ const Edit = (props) => {
 		className: classnames(className, `eb-guten-block-main-parent-wrapper`),
 	});
 
+	// Picking an image also takes its alt text, unless the user already set one.
+	const onSelectImage = (media) =>
+		setAttributes({
+			imageURL: media.url,
+			imageID: media.id,
+			...(!imageAltTag && media.alt ? { imageAltTag: media.alt } : {}),
+		});
+
 	if (!imageURL) {
+		// The placeholder still needs the block wrapper, or the block cannot be
+		// selected and gets no toolbar until an image is picked.
 		return (
-			<MediaPlaceholder
-				onSelect={(media) =>
-					setAttributes({
-						imageURL: media.url,
-						imageID: media.id,
-					})
-				}
-				allowTypes={["image"]}
-				labels={{
-					title: "Images",
-					instructions:
-						"Drag media file, upload or select files from your library.",
-				}}
-			/>
+			<div {...blockProps}>
+				<MediaPlaceholder
+					onSelect={onSelectImage}
+					allowedTypes={["image"]}
+					labels={{
+						title: __("Images", "interactive-promo"),
+						instructions: __(
+							"Drag media file, upload or select files from your library.",
+							"interactive-promo"
+						),
+					}}
+				/>
+			</div>
 		);
 	}
 
@@ -94,18 +103,13 @@ const Edit = (props) => {
 					<ToolbarItem>
 						{() => (
 							<MediaUpload
-								onSelect={(media) =>
-									setAttributes({
-										imageURL: media.url,
-										imageID: media.id,
-									})
-								}
+								onSelect={onSelectImage}
 								allowedTypes={["image"]}
 								value={imageID}
 								render={({ open }) => (
 									<ToolbarButton
 										className="components-toolbar__control"
-										label={__("Edit Image", "essential-blocks")}
+										label={__("Edit Image", "interactive-promo")}
 										icon="edit"
 										onClick={open}
 									/>
@@ -134,6 +138,7 @@ const Edit = (props) => {
 												href={sanitizeLink(link)}
 												target={newWindow ? "_blank" : "_self"}
 												rel="noopener noreferrer"
+												aria-label={header}
 											/>
 										)}
 									</figcaption>

@@ -97,6 +97,11 @@ Yes, it will work with any standard WordPress theme.
 * Fixed: Existing Interactive Promo blocks stopped working on the front end when Essential Blocks is active
 * Fixed: Animated blocks appeared without playing their animation when Essential Blocks is active
 * Fixed: Editor sidebar controls conflicting with other plugins' styles
+* Fixed: Promo hover effects not showing in the editor canvas
+* Fixed: Block could not be selected before an image was chosen
+* Fixed: Selected image ID was lost after reopening the post
+* Improved: Media picker now shows images only and takes the image's alt text
+* Improved: Accessible label on the promo link, editor translations and block API v3
 
 = 1.3.1 - 27/10/2026 =
 * Improved: Security enhancements

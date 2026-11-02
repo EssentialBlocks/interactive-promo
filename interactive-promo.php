@@ -71,6 +71,7 @@ function create_block_interactive_promo_block_init() {
         $all_dependencies,
         isset( $script_asset['version'] ) ? $script_asset['version'] : INTERACTIVE_PROMO_BLOCKS_VERSION
     );
+    wp_set_script_translations( 'interactive-promo-block-editor-js', 'interactive-promo' );
 
     $load_animation_js = INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . 'assets/js/eb-animation-load.js';
     wp_register_script(
@@ -110,7 +111,7 @@ function create_block_interactive_promo_block_init() {
                         wp_enqueue_style( 'essential-blocks-animation' );
                         wp_enqueue_script( 'essential-blocks-eb-animation' );
                     }
-                    return Interactive_Promo_Helper::sanitize_links( $content );
+                    return Interactive_Promo_Helper::label_links( Interactive_Promo_Helper::sanitize_links( $content ) );
                 }
             ]
         );

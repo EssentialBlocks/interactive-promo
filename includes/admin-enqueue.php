@@ -8,10 +8,18 @@ if (!defined('ABSPATH')) {
 class InteractivePromoAdmin
 {
     public function __construct() {
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_styles'));
+        // `enqueue_block_assets`, not `admin_enqueue_scripts`: the editor canvas is an
+        // iframe, and only styles enqueued here are copied into it. Without that the
+        // `effect-*` rules never reach the canvas and the caption renders below the image.
+        add_action('enqueue_block_assets', array($this, 'enqueue_styles'));
     }
 
     public function enqueue_styles() {
+        // The frontend enqueues the stylesheet from the block's render callback.
+        if (!is_admin()) {
+            return;
+        }
+
         if ($this->eb_is_edit_page() || $this->eb_is_site_editor()) {
             // hover effects
             $hover_style      = "assets/css/hover-effects.css";

@@ -4,7 +4,7 @@
  * Plugin Name:     Interactive Promo
  * Plugin URI:      https://essential-blocks.com
  * Description:     Engage your potential audience with an exciting promo.
- * Version:         1.3.1
+ * Version:         1.3.2
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -41,7 +41,7 @@ if ( file_exists( __DIR__ . '/lib/style-handler/style-handler.php' ) ) {
 }
 
 function create_block_interactive_promo_block_init() {
-    define( 'INTERACTIVE_PROMO_BLOCKS_VERSION', "1.3.1" );
+    define( 'INTERACTIVE_PROMO_BLOCKS_VERSION', "1.3.2" );
     define( 'INTERACTIVE_PROMO_BLOCKS_ADMIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH', dirname( __FILE__ ) );
 
@@ -99,25 +99,49 @@ function create_block_interactive_promo_block_init() {
         'all'
     );
 
-    if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/interactive-promo' ) ) {
-        register_block_type(
-            Interactive_Promo_Helper::get_block_register_path( 'interactive-promo/interactive-promo', INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH ),
-            [
-                'editor_script'   => 'interactive-promo-block-editor-js',
-                'render_callback' => function ( $attributes, $content ) {
-                    if ( ! is_admin() ) {
-                        wp_enqueue_style( 'hover-effects-style' );
-                        wp_enqueue_style( 'essential-blocks-animation' );
-                        wp_enqueue_script( 'essential-blocks-eb-animation' );
-                    }
-                    return Interactive_Promo_Helper::sanitize_links( $content );
-                }
-            ]
-        );
+    $eb_has_block = WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/interactive-promo' );
+    $block_args   = [
+        'editor_script'   => 'interactive-promo-block-editor-js',
+        'render_callback' => function ( $attributes, $content ) {
+            if ( ! is_admin() ) {
+                wp_enqueue_style( 'hover-effects-style' );
+                wp_enqueue_style( 'essential-blocks-animation' );
+                wp_enqueue_script( 'essential-blocks-eb-animation' );
+            }
+            return Interactive_Promo_Helper::sanitize_links( $content );
+        }
+    ];
+
+    // Essential Blocks has its own version of this block under another name. Posts saved
+    // with this one still need its render callback and front-end assets, so keep it
+    // registered, but leave out the editor bundle, which can't run beside Essential Blocks.
+    if ( $eb_has_block ) {
+        unset( $block_args['editor_script'] );
     }
+
+    register_block_type(
+        Interactive_Promo_Helper::get_block_register_path( 'interactive-promo/interactive-promo', INTERACTIVE_PROMO_BLOCKS_ADMIN_PATH ),
+        $block_args
+    );
 }
 
 add_action( 'init', 'create_block_interactive_promo_block_init', 99 );
+
+/**
+ * Block icons are filled #6C3BFF, which almost disappears on the highlighted row of
+ * the "/" inserter, a selected List View row and the drag chip. Recolour them there,
+ * as Essential Blocks does. The handle is shared, so the stylesheet prints once when
+ * several of these plugins are active.
+ */
+function interactive_promo_block_icon_selected_style() {
+    wp_enqueue_style(
+        'eb-block-icon-selected',
+        plugins_url( 'assets/css/block-icon-selected.css', __FILE__ ),
+        [],
+        INTERACTIVE_PROMO_BLOCKS_VERSION
+    );
+}
+add_action( 'enqueue_block_editor_assets', 'interactive_promo_block_icon_selected_style' );
 
 /**
  * Admin notice shown when the compiled block assets are missing.
@@ -136,3 +160,19 @@ function interactive_promo_missing_build_notice() {
         esc_html__( 'the compiled block assets are missing, so the block was not registered. Run `npm ci && npm run build` in the plugin directory, or reinstall the plugin.', 'interactive-promo' )
     );
 }
+
+/**
+ * Let Essential Blocks' animation assets win on the front end when it is active.
+ *
+ * Both plugins register these handles and the first registration wins. This
+ * plugin's loader doesn't set `window.ebAnimationLoaded`, so Essential Blocks'
+ * failsafe would reveal every animated block without playing it. Essential Blocks
+ * registers its own at priority 20 and handles the same `.eb___animated` classes.
+ */
+function interactive_promo_use_essential_blocks_animation() {
+    if ( defined( 'ESSENTIAL_BLOCKS_VERSION' ) ) {
+        wp_deregister_script( 'essential-blocks-eb-animation' );
+        wp_deregister_style( 'essential-blocks-animation' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'interactive_promo_use_essential_blocks_animation', 19 );

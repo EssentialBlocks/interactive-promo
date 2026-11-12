@@ -99,7 +99,7 @@ class Interactive_Promo_Helper
             }
 
             wp_enqueue_style(
-                'essential-blocks-editor-css',
+                'interactive-promo-controls-css',
                 INTERACTIVE_PROMO_BLOCKS_ADMIN_URL . '/dist/modules.css',
                 array('essential-blocks-animation'),
                 $controls_version,
